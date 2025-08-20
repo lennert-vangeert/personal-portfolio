@@ -6,7 +6,8 @@
     "dev": "nodemon src/server.ts",
     "build": "esbuild src/server.ts --bundle --platform=node --outfile=dist/index.js --format=esm",
     "validate:types": "tsc --noemit",
-    "generate:me": "node src/data/generateIndex.js"
+    "generate:me": "node src/data/generateIndex.js",
+    "start": "node dist/index.js"
   },
   "author": "",
   "license": "ISC",
