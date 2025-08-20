@@ -1,23 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import OpenAI from "openai";
 import rawIndex from "../../data/index.json";
+import { KBIndex } from "./Chat.types";
+import { client, cosine, sanitizeHTML } from "./Chat.utils";
 
-// --- utils (could be moved to separate files) ---
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
-
-function cosine(a: number[], b: number[]) {
-  const dot = a.reduce((s, v, i) => s + v * b[i], 0);
-  const normA = Math.sqrt(a.reduce((s, v) => s + v * v, 0));
-  const normB = Math.sqrt(b.reduce((s, v) => s + v * v, 0));
-  return dot / (normA * normB);
-}
-
-// Assume you’ve precomputed this index offline and stored it as JSON
-// Example shape: { chunks: [{ chunk: string; embedding: number[] }] }
-type KBIndex = { chunks: { chunk: string; embedding: number[] }[] };
 const index = rawIndex as unknown as KBIndex;
 
-// --- main controller ---
 export const sendChatMessage = async (
   req: Request,
   res: Response,
@@ -26,7 +13,11 @@ export const sendChatMessage = async (
   try {
     const { message } = req.body;
     if (!message || typeof message !== "string") {
-      return res.status(400).json({ error: "Invalid message" });
+      return res.status(400).json({
+        answer: "error",
+        chunksUsed: ["error"],
+        error: "Invalid message",
+      });
     }
 
     // 1. Create embedding for the question
@@ -42,15 +33,18 @@ export const sendChatMessage = async (
       .sort((a, b) => b.score - a.score)
       .slice(0, 3);
 
-    // 3. Build context
+    // 3. Build context (full text, not summary!)
     const context = scored.map((c) => `— ${c.chunk}`).join("\n");
-
+    const currentDate = new Date().toISOString();
     // 4. Ask the model with context
-    const system = `You are an assistant on a portfolio website that ONLY answers using the provided CONTEXT about the candidate.
-If the answer is not in CONTEXT, reply "I don’t know". Be concise and friendly.`;
+    const system = `You are an assistant on a portfolio website that ONLY answers using the provided CONTEXT about the candidate. 
+Do NOT copy the context word-for-word or include raw Markdown (like *, #, **, ***, [], ()). 
+Instead, rewrite the information into clean, natural language paragraphs or, if helpful, into simple bullet points with no special symbols. 
+The tone should be concise, friendly, and professional. 
+If the answer is not in CONTEXT, reply: "I don’t know, the answer to your question doesn't seem to be in the provided context.". The current data is ${currentDate}`;
 
     const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-4o",
       temperature: 0.2,
       messages: [
         { role: "system", content: system },
@@ -61,14 +55,23 @@ If the answer is not in CONTEXT, reply "I don’t know". Be concise and friendly
       ],
     });
 
-    const answer = completion.choices[0]?.message?.content ?? "I don’t know.";
+    const answer =
+      completion.choices[0]?.message?.content ??
+      "Something went wrong, try again.";
 
-    // 5. Return result
+    // 5. Return result with summaries instead of full chunks
     res.json({
-      answer,
-      chunksUsed: scored.map((s) => s.chunk), // optional for debugging
+      answer: sanitizeHTML(answer),
+      chunksUsed: scored.map((s) => s.summary ?? "No summary available"),
+      error: null,
     });
-  } catch (err) {
-    next(err);
+  } catch (err: any) {
+    console.error("❌ Chat error:", err);
+
+    res.status(500).json({
+      answer: "error",
+      chunksUsed: ["error"],
+      error: err?.message || "Something went wrong, try again.",
+    });
   }
 };

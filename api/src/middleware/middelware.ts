@@ -30,6 +30,11 @@ export const registerMiddleware = (app: Express) => {
         return callback(null, true);
       }
 
+      if (isDev) {
+        console.warn(`CORS policy: origin ${incomingOrigin} not allowed`);
+        return callback(null, true);
+      }
+
       return callback(
         new Error(`CORS policy: origin ${incomingOrigin} not allowed`),
         false

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><style>
+    #light-icon {
+      display: inline;
+    }
+    #dark-icon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #light-icon {
+        display: none;
+      }
+      #dark-icon {
+        display: inline;
+      }
+    }
+  </style><g id="light-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1075)"><rect width="1000" height="1000" fill="#ffffff"></rect><g transform="matrix(2.6871401151631478,0,0,2.6871401151631478,150,288.1190019193858)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="260.5" height="157.7"><svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260.5 157.7">
+  <defs>
+    <style>
+      .b {
+        isolation: isolate;
+      }
+
+      .c {
+        fill: #1d1d1b;
+      }
+    </style>
+  <clipPath id="SvgjsClipPath1075"><rect width="1000" height="1000" x="0" y="0" rx="400" ry="400"></rect></clipPath></defs>
+  <g class="b">
+    <g class="b">
+      <path class="c" d="M24.3,22.1h20.1l-17.4,81.7h47.2l-5.6,16.5H3.4L24.3,22.1Z"></path>
+    </g>
+    <g class="b">
+      <path class="c" d="M91.1,120.4l-13.1-98.3h20l5.1,45.4c1.6,13.8,2.6,29.1,2.7,34.8h.3c3.7-9.1,10.4-21.8,18-35.7l24.8-44.5h20.7l-55.6,98.3h-22.8Z"></path>
+    </g>
+    <g class="b">
+      <path class="c" d="M244.1,120.4h-15.7c-.3-2.4.3-7.7.9-10.7-6.7,8.8-15.3,12.1-27.5,12.1-23.1,0-34.7-16.8-34.7-39.8s17.3-61.3,53.6-61.3,37,13.4,37,31.5h-20.1c-.4-7.1-5.1-15.6-19.3-15.6-21.3,0-30.4,24.7-30.4,43.9s6,25.1,19.8,25.1,21.5-11,24-22.5v-.4c.1,0-22.5,0-22.5,0l3.7-17.5h41.8l-10.6,55.2Z"></path>
+    </g>
+  </g>
+</svg></svg></g></g></svg></g><g id="dark-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><g><g transform="matrix(3.838771593090211,0,0,3.838771593090211,0,197.31285988483685)" style="filter: invert(100%)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="260.5" height="157.7"><svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260.5 157.7">
+  <defs>
+    <style>
+      .b {
+        isolation: isolate;
+      }
+
+      .c {
+        fill: #1d1d1b;
+      }
+    </style>
+  </defs>
+  <g class="b">
+    <g class="b">
+      <path class="c" d="M24.3,22.1h20.1l-17.4,81.7h47.2l-5.6,16.5H3.4L24.3,22.1Z"></path>
+    </g>
+    <g class="b">
+      <path class="c" d="M91.1,120.4l-13.1-98.3h20l5.1,45.4c1.6,13.8,2.6,29.1,2.7,34.8h.3c3.7-9.1,10.4-21.8,18-35.7l24.8-44.5h20.7l-55.6,98.3h-22.8Z"></path>
+    </g>
+    <g class="b">
+      <path class="c" d="M244.1,120.4h-15.7c-.3-2.4.3-7.7.9-10.7-6.7,8.8-15.3,12.1-27.5,12.1-23.1,0-34.7-16.8-34.7-39.8s17.3-61.3,53.6-61.3,37,13.4,37,31.5h-20.1c-.4-7.1-5.1-15.6-19.3-15.6-21.3,0-30.4,24.7-30.4,43.9s6,25.1,19.8,25.1,21.5-11,24-22.5v-.4c.1,0-22.5,0-22.5,0l3.7-17.5h41.8l-10.6,55.2Z"></path>
+    </g>
+  </g>
+</svg></svg></g></g></svg></g></svg>

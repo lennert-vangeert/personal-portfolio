@@ -7,21 +7,21 @@ import type * as React from "react";
 
 // Color information
 const colors = {
-  text: "#021529",
+  text: "#ffffffff",
   white: "#FFFFFF",
   black: "#000000",
   dark: "#293644",
   medium: "#6F7881",
   light: "#B9C2CC",
-  mainBackground: "#FFFFFF", // Semantic white remains for components: change this for dark mode for example
+  mainBackground: "#434243ff", // Semantic white remains for components: change this for dark mode for example
   backgroundTransparent: "transparent",
   warning: "#FFD676",
   default: {
-    primary: "#0A78F2",
-    hover: "#1562B7",
-    focus: "#489DFC",
-    active: "#048C8C",
-    disabled: "#E0E7F0",
+    primary: "#DD6031",
+    hover: "#f77c4fff",
+    focus: "#f77c4fff",
+    active: "#f77c4fff",
+    disabled: "#f99c7aff",
   },
 };
 
@@ -94,7 +94,7 @@ const theme: MantineThemeOverride = {
       "#567930",
     ],
   },
-  fontFamily: "Roboto, Helvetica",
+  fontFamily: "Oxanium, sans-serif",
   fontSizes: {
     xs: "0.6875rem",
     sm: "0.875rem",
@@ -110,21 +110,21 @@ const theme: MantineThemeOverride = {
     xl: "1.65",
   },
   headings: {
-    fontFamily: "Roboto, Helvetica",
+    fontFamily: "Oxanium, sans-serif",
     textWrap: "wrap",
     sizes: {
       h1: {
-        fontSize: "2.25rem",
-        fontWeight: "900",
-        lineHeight: "1.5",
-      },
-      h2: {
         fontSize: "2rem",
         fontWeight: "900",
         lineHeight: "1.5",
       },
-      h3: {
+      h2: {
         fontSize: "1.75rem",
+        fontWeight: "900",
+        lineHeight: "1.5",
+      },
+      h3: {
+        fontSize: "1.6rem",
         fontWeight: "900",
         lineHeight: "1.5",
       },
@@ -208,6 +208,18 @@ const theme: MantineThemeOverride = {
       styles: {
         main: {
           minWidth: breakpoints.xs,
+        },
+      },
+    },
+    SegmentedControl: {
+      styles: {
+        root: {
+          borderRadius: "2rem",
+        },
+        indicator: {
+          borderRadius: "2rem",
+          backgroundColor: colors.default.primary,
+          color: colors.white,
         },
       },
     },
