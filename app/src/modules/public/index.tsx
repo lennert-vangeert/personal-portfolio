@@ -4,7 +4,7 @@ import ProjectDetailPage from "./projectDetail";
 import ChatPage from "./chatPage";
 import ContactPage from "./contactPage";
 import ProjectListPage from "./projectListPage";
-import HomePage from "./homePage";
+import IndexPage from "./indexPage";
 
 const subPages: RouteObject[] = [
   {
@@ -20,7 +20,7 @@ export const publicRoutes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: <IndexPage />,
         handle: "Home",
       },
       {

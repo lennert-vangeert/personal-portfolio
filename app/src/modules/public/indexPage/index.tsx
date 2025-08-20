@@ -25,7 +25,7 @@ import {
 import BlurredText from "@common/blurredText";
 import { Link } from "react-router-dom";
 
-const HomePage = () => {
+const IndexPage = () => {
   const { mainMargin, isBigTablet, isMobile, isSmallMobile } = useSelector(
     (state: RootState) => state.ui
   );
@@ -248,4 +248,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default IndexPage;
