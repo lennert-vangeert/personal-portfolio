@@ -2,8 +2,7 @@ import compression from "compression";
 import cors, { CorsOptions } from "cors";
 import express, { Express } from "express";
 import helmet from "helmet";
-import passport from "passport";
-import {healthRoutes} from "../modules/Health/Health.routes";
+import { healthRoutes } from "../modules/Health/Health.routes";
 
 export const registerMiddleware = (app: Express) => {
   // —————————————————————————————
@@ -49,11 +48,6 @@ export const registerMiddleware = (app: Express) => {
   // JSON parser middleware
   // —————————————————————————————
   app.use(express.json());
-
-  // —————————————————————————————
-  // Passport (for JWT/auth) must come before your routes
-  // —————————————————————————————
-  app.use(passport.initialize());
 
   // —————————————————————————————
   // Helmet for security HTTP headers

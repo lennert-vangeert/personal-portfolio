@@ -1,0 +1,10 @@
+[http_service]
+  internal_port = 9000
+  force_https = true
+  auto_stop_machines = true   # Stop when no requests
+  auto_start_machines = true  # Start automatically when requests come in
+  min_machines_running = 0    # Allow scaling down to 0
+
+[scale]
+  count = 1
+  max_per_region = 1
