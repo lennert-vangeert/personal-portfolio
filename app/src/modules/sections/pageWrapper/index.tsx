@@ -1,5 +1,5 @@
 import { AppShell, Box, useMantineTheme } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { useFetch, useMediaQuery } from "@mantine/hooks";
 import { ReactNode, useEffect, useMemo, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
@@ -23,6 +23,15 @@ type PageWrapperProps = {
   /** Children to be rendered inside the PageWrapper */
   children?: ReactNode;
 };
+
+const runHealthCheck = async () => {
+  try {
+    await fetch(`${import.meta.env.VITE_API_ORIGIN}/test`);
+  } catch (error) {
+    return;
+  }
+};
+runHealthCheck();
 
 /**
  * PageWrapper component
