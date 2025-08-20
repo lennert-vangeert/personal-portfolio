@@ -239,7 +239,7 @@ const ChatPage = () => {
               pos="fixed"
               bottom="2.5rem"
               left="50%"
-              placeholder="question..."
+              placeholder="10 questions / 15 minutes"
               autosize
               minRows={1}
               maxRows={5}
