@@ -3,8 +3,8 @@ import PageWrapper from "../sections/pageWrapper";
 import ProjectDetailPage from "./projectDetail";
 import ChatPage from "./chatPage";
 import ContactPage from "./contactPage";
-import HomePage from "./homePage";
 import ProjectListPage from "./projectListPage";
+import HomePage from "./homePage";
 
 const subPages: RouteObject[] = [
   {
