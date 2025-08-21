@@ -109,13 +109,9 @@ Favorite Movies: Christopher Nolan films (Interstellar is the favorite)
 - Skills: TypeScript, DOM manipulation, event handling.
 - Url: [development-quiz](https://dev-quiz-y0am.onrender.com/)
 
-**Personal Seed Monorepo**
-
-- TypeScript-based monorepo with both an `app` and `api`.
-- Designed for reusability across multiple projects.
-
 # Achievements
 
+- Won 'Best Studio Project' at Artevelde University of applied sciences (2025).
 - Participated in the _Hack the Future_ Hackathon (2024).
 
 # Contact

@@ -6,6 +6,7 @@ import {
   Button,
   Center,
   Flex,
+  Group,
   Image,
   Stack,
   Text,
@@ -14,16 +15,24 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useSelector } from "react-redux";
-import me from "/me.png";
+import me from "/images/me.png";
 import { ExplodingText } from "@common/explodingText";
 import {
   IconArrowRight,
   IconBrandOffice,
+  IconMusic,
   IconQuestionMark,
   IconSchool,
 } from "@tabler/icons-react";
 import BlurredText from "@common/blurredText";
 import { Link } from "react-router-dom";
+
+const audio = new Audio("/audio/lennert.mp3");
+const handlePlayAudio = () => {
+  audio.play().catch((error) => {
+    console.error("Failed to play audio:", error);
+  });
+};
 
 const IndexPage = () => {
   const { mainMargin, isBigTablet, isMobile, isSmallMobile } = useSelector(
@@ -62,18 +71,26 @@ const IndexPage = () => {
           )}
 
           <Stack>
-            <Title
-              order={1}
-              size={
-                isSmallMobile
-                  ? theme.headings.sizes.h2.fontSize
-                  : theme.headings.sizes.h1.fontSize
-              }
-            >
-              Hi, I'm {isMobile && <br />}{" "}
-              <ExplodingText text="Lennert Van Geert" />
-            </Title>
-            <Text size={theme.headings.sizes.h4.fontSize}>
+            <Box>
+              <Title
+                order={1}
+                size={
+                  isSmallMobile
+                    ? theme.headings.sizes.h2.fontSize
+                    : theme.headings.sizes.h1.fontSize
+                }
+              >
+                Hi, I'm {isMobile && <br />}{" "}
+                <ExplodingText text="Lennert Van Geert" />
+              </Title>
+              <Group gap=".25rem">
+                <Text size="sm">/ˈlɛn.ərt vɑn ˈxeːrt/</Text>
+                <Button onClick={handlePlayAudio} variant="transparent" p={0}>
+                  <IconMusic height={16} width={16} />
+                </Button>
+              </Group>
+            </Box>
+            <Text size={theme.headings.sizes.h4.fontSize} maw="50rem">
               I'm a software developer with a passion for creating innovative
               solutions based in Flanders, Belgium.
             </Text>
@@ -238,6 +255,7 @@ const IndexPage = () => {
                 deg: 45,
               }}
               key={tech}
+              c=""
             >
               {tech}
             </Badge>
@@ -246,9 +264,7 @@ const IndexPage = () => {
         <Title order={2} mt="2rem">
           My Projects
         </Title>
-        <Text>
-          To be announced! Maybe my AI can tell you more about it?
-        </Text>
+        <Text>To be announced! Maybe my AI can tell you more about it?</Text>
       </Box>
     </>
   );
