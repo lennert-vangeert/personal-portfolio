@@ -76,12 +76,17 @@ Favorite Movies: Christopher Nolan films (Interstellar is the favorite)
 - Web app showcasing Laura's projects and skills.
 - Uses Mantine, i18next, React, Redux, Contentful CMS
 
+**Sam website for the CLB of West Flanders (2025)**
+
+- Web app providing information and resources for students and parents to help with the transition to high school.
+- Uses Mantine, React, Redux, file downloads, and more.
+
 **The Mol Quiz (2025)**
 
 - Web app where family and friends participated in a weekly quiz about the TV show _De Mol_.
 - Features: automated email notifications, live scoreboard, admin interface to manage questions and results.
 
-**Defcon IoT escape room**
+**Defcon IoT escape room 2024**
 
 - Web app where family and friends participated in an IoT-based escape room challenge.
 - Features: real-time device monitoring, interactive puzzles, and a collaborative team experience.

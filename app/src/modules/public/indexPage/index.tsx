@@ -26,6 +26,7 @@ import {
 } from "@tabler/icons-react";
 import BlurredText from "@common/blurredText";
 import { Link } from "react-router-dom";
+import ProjectsGrid from "@common/projectsGrid";
 
 const audio = new Audio("/audio/lennert.mp3");
 const handlePlayAudio = () => {
@@ -46,7 +47,7 @@ const IndexPage = () => {
         description="This is the homepage"
         keyWords="Lennert Van Geert, Portfolio, homepage, information, techstack, contact me"
       />
-      <Box mb="2rem" mt="2.5rem" mx={mainMargin}> 
+      <Box mb="2rem" mt="2.5rem" mx={mainMargin}>
         <Flex
           gap="2rem"
           align={isBigTablet ? undefined : "center"}
@@ -268,7 +269,7 @@ const IndexPage = () => {
         <Title order={2} mt="2rem">
           My Projects
         </Title>
-        <Text>To be announced! Maybe my AI can tell you more about it?</Text>
+        <ProjectsGrid />
       </Box>
     </>
   );

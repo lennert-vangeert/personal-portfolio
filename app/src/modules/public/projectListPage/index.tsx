@@ -1,23 +1,21 @@
-import { ExplodingText } from "@common/explodingText";
+import ProjectsGrid from "@common/projectsGrid";
 import Head from "@global/head";
 import { RootState } from "@global/store/store";
-import { Box, Center, Stack, Title } from "@mantine/core";
+import { Box, Title } from "@mantine/core";
 import { useSelector } from "react-redux";
 
 const ProjectListPage = () => {
-  const { mainMargin, isMobile } = useSelector((state: RootState) => state.ui);
+  const { mainMargin } = useSelector((state: RootState) => state.ui);
   return (
     <>
-      <Head title="Projects" description="Explore my projects" keyWords="Lennert Van Geert, Portfolio, projects, web development, node" />
-      <Box mx={mainMargin}>
-        <Center mt="5rem">
-          <Stack align={isMobile ? "flex-start" : "center"} gap="1rem">
-            <Title order={1} size={isMobile ? "2rem" : "3rem"}>
-              <ExplodingText text="To be announced!" />
-            </Title>
-            <Title order={2}>Maybe my AI can tell you more about it?</Title>
-          </Stack>
-        </Center>
+      <Head
+        title="Projects"
+        description="Explore my projects"
+        keyWords="Lennert Van Geert, Portfolio, projects, web development, node"
+      />
+      <Box mx={mainMargin} mb="2rem">
+        <Title order={1}>My Projects</Title>
+        <ProjectsGrid />
       </Box>
     </>
   );
