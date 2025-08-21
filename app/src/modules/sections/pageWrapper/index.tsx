@@ -1,5 +1,5 @@
 import { AppShell, Box, useMantineTheme } from "@mantine/core";
-import { useFetch, useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery } from "@mantine/hooks";
 import { ReactNode, useEffect, useMemo, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 

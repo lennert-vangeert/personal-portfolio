@@ -243,6 +243,12 @@ const IndexPage = () => {
             </Badge>
           ))}
         </Flex>
+        <Title order={2} mt="2rem">
+          My Projects
+        </Title>
+        <Text>
+          To be announced! Maybe my AI can tell you more about it?
+        </Text>
       </Box>
     </>
   );
