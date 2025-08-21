@@ -75,7 +75,7 @@ const IndexPage = () => {
             </Title>
             <Text size={theme.headings.sizes.h4.fontSize}>
               I'm a software developer with a passion for creating innovative
-              solutions.
+              solutions based in Flanders, Belgium.
             </Text>
           </Stack>
         </Flex>

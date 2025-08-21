@@ -120,6 +120,6 @@ Favorite Movies: Christopher Nolan films (Interstellar is the favorite)
 
 # Contact
 
-- Email: [lennert@lennertvg.be]
+- Email: [lennert@lennertvg.be](mailto:lennert@lennertvg.be)
 - GitHub: [lennert-vangeert](https://github.com/lennert-vangeert)
 - Portfolio: [lennertvg.be](https://lennertvg.be)
