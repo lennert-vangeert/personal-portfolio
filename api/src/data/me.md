@@ -11,7 +11,7 @@ Favorite Movies: Christopher Nolan films (Interstellar is the favorite)
 
 # Education
 
-2022–2025: Graphical and Digital Media: Multimedia Production — Artevelde University of Applied Sciences
+2022–2025: Graphical and Digital Media: Multimedia Production — Artevelde University of Applied Sciences (Graduated Cum Laude)
 
 - Thesis (Team of 5): Created a complex website, six animated explainer videos, campaign materials, and a mascot for the CLB (Centrum voor leerlingenbegeleiding) to help 5th–6th graders and parents navigate the move to secondary school.
 
@@ -124,3 +124,4 @@ Favorite Movies: Christopher Nolan films (Interstellar is the favorite)
 - Email: [lennert@lennertvg.be](mailto:lennert@lennertvg.be)
 - GitHub: [lennert-vangeert](https://github.com/lennert-vangeert)
 - Portfolio: [lennertvg.be](https://lennertvg.be)
+- LinkedIn: [lennert-vangeert](https://www.linkedin.com/in/lennert-van-geert/)
