@@ -41,8 +41,12 @@ const IndexPage = () => {
   const theme = useMantineTheme();
   return (
     <>
-      <Head title="Home" description="This is the homepage" />
-      <Box mb="2rem" mt="2.5rem" mx={mainMargin}>
+      <Head
+        title="Home"
+        description="This is the homepage"
+        keyWords="Lennert Van Geert, Portfolio, homepage, information, techstack, contact me"
+      />
+      <Box mb="2rem" mt="2.5rem" mx={mainMargin}> 
         <Flex
           gap="2rem"
           align={isBigTablet ? undefined : "center"}

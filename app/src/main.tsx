@@ -10,17 +10,17 @@ import { store } from "@global/store/store";
 import { Notifications } from "@mantine/notifications";
 import "@global/style/mantineTheme/fonts.css";
 import "@global/style/main.css";
-import FloatingBackground from "@common/floatingBackground";
+import ParticlesBackground from "@common/particleBackground";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <MantineStyles>
       <MantineProvider>
         <Provider store={store}>
-          <FloatingBackground>
-            <Notifications />
-            <RouterProvider router={router} />
-          </FloatingBackground>
+            <ParticlesBackground>
+              <Notifications />
+              <RouterProvider router={router} />
+            </ParticlesBackground>
         </Provider>
       </MantineProvider>
     </MantineStyles>

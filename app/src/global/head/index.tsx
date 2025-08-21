@@ -9,9 +9,9 @@ type Props = {
   keyWords?: string;
 };
 
-const appTitle = "Portfolio";
+const appTitle = "Lennert Van Geert";
 const defaultKeyWords =
-  "Portfolio, Lennert Van Geert, Web Developer, Frontend Developer, Backend Developer, Full Stack Developer, React, Node.js, JavaScript, TypeScript, Web Development";
+  "Lennert Van Geert, Portfolio, Web Developer, Frontend Developer, Backend Developer, Full Stack Developer, React, Node.js, JavaScript, TypeScript, Web Development";
 const author = "Lennert Van Geert";
 
 /**

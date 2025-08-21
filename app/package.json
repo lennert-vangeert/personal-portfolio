@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mantine/carousel": "^8.2.5",
     "@mantine/core": "^8.2.5",
     "@mantine/dates": "^8.2.5",
     "@mantine/form": "^8.2.5",
@@ -18,12 +19,14 @@
     "@mantine/modals": "^8.2.5",
     "@mantine/notifications": "^8.2.5",
     "@mantine/spotlight": "^8.2.5",
-    "@mantine/carousel": "^8.2.5",
     "@reduxjs/toolkit": "^2.8.2",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
     "@tabler/icons-react": "^3.34.1",
+    "@tsparticles/engine": "^3.9.1",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.9.1",
     "axios": "^1.8.4",
     "dayjs": "^1.11.13",
     "embla-carousel": "^8.6.0",

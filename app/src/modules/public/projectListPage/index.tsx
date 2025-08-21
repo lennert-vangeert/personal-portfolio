@@ -8,7 +8,7 @@ const ProjectListPage = () => {
   const { mainMargin, isMobile } = useSelector((state: RootState) => state.ui);
   return (
     <>
-      <Head title="Projects" description="Explore my projects" />
+      <Head title="Projects" description="Explore my projects" keyWords="Lennert Van Geert, Portfolio, projects, web development, node" />
       <Box mx={mainMargin}>
         <Center mt="5rem">
           <Stack align={isMobile ? "flex-start" : "center"} gap="1rem">
