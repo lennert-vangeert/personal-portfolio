@@ -1,0 +1,39 @@
+.leftMessage {
+  animation: slideFromLeft 0.2s ease-out;
+}
+
+.rightMessage {
+  animation: slideFromRight 0.2s ease-out;
+}
+
+@keyframes slideFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leftMessage {
+    animation: none !important;
+    transition: none !important;
+    transform: none;
+  }
+
+.rightMessage {
+  animation: none !important;
+  transition: none !important;
+  transform: none;
+}
+}

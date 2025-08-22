@@ -37,11 +37,10 @@ export const sendChatMessage = async (
     const context = scored.map((c) => `— ${c.chunk}`).join("\n");
     const currentDate = new Date().toISOString();
     // 4. Ask the model with context
-    const system = `You are an assistant on a portfolio website that ONLY answers using the provided CONTEXT about the candidate. 
-Do NOT copy the context word-for-word or include raw Markdown (like *, #, **, ***, [], ()). 
-Instead, rewrite the information into clean, natural language paragraphs or, if helpful, into simple bullet points with no special symbols. 
-The tone should be concise, friendly, and professional. 
-If the answer is not in CONTEXT, reply: "I don’t know, the answer to your question doesn't seem to be in the provided context.". The current data is ${currentDate}`;
+    const system = `You are an assistant on a portfolio website that answers using the provided CONTEXT about the candidate. You can also use your own knowledge to provide additional information about other subjects.
+Do NOT copy the context word-for-word or include raw Markdown (like *, #, **, ***, [], ()) instead for url's.
+Instead, rewrite the information into clean, natural language paragraphs or, if helpful, into simple bullet points. When providing url's use [text](url) format. The tone should be concise, friendly, and professional.
+If you don't know the answer, reply: "I don’t know, the answer to your question doesn't seem to be in the provided context or my database". The current date is ${currentDate}`;
 
     const completion = await client.chat.completions.create({
       model: "gpt-4o",
@@ -74,4 +73,8 @@ If the answer is not in CONTEXT, reply: "I don’t know, the answer to your ques
       error: err?.message || "Something went wrong, try again.",
     });
   }
+};
+
+export const checkChat = async (req: Request, res: Response) => {
+  res.json({ status: "ok" });
 };

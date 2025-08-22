@@ -1,13 +1,9 @@
 import express from "express";
-import { sendChatMessage } from "./Chat.controller";
+import { checkChat, sendChatMessage } from "./Chat.controller";
 
 const router = express.Router();
 
 router.post("/chat", sendChatMessage);
-router.get("/test", (req, res) => {
-  res.json({
-    message: "This is a test response",
-  });
-});
+router.get("/chat/test", checkChat);
 
 export { router as chatRoutes };

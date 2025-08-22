@@ -1,19 +1,28 @@
 import Head from "@global/head";
 import { RootState } from "@global/store/store";
 import {
+  Alert,
   Box,
   Center,
+  Loader,
   Skeleton,
   Stack,
   Text,
   Textarea,
+  Title,
   Tooltip,
   useMantineTheme,
 } from "@mantine/core";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { IconArrowUp, IconTrash } from "@tabler/icons-react";
-import { fetch } from "@common/utils/fetcher";
+import {
+  IconArrowUp,
+  IconExclamationCircle,
+  IconTrash,
+} from "@tabler/icons-react";
+import { fetch } from "@global/utils/fetcher";
+import useSanitizeURL from "@common/utils/sanitizeUrl";
+import styler from "./ChatPage.module.css";
 
 type Message = {
   id: string;
@@ -40,17 +49,18 @@ const ChatPage = () => {
       try {
         return JSON.parse(stored) as Message[];
       } catch {
-        console.error("Failed to parse chat history from localStorage");
         return [];
       }
     }
     return [];
   });
   const [loading, setLoading] = useState<boolean>(false);
-  const [_, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [__, setHistoryIndex] = useState<number | null>(null);
+  const [chatReady, setChatReady] = useState<number>(0); // 0 = not ready, 1 = ready, 2 = error
 
   const theme = useMantineTheme();
+  const sanitizeURL = useSanitizeURL();
 
   useEffect(() => {
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -59,9 +69,26 @@ const ChatPage = () => {
         const parsed: Message[] = JSON.parse(stored);
         setMessages(parsed);
       } catch {
-        console.error("Failed to parse chat history from localStorage");
       }
     }
+    const fetchCheck = async () => {
+      try {
+        const response: { status: string } = await fetch(
+          `${import.meta.env.VITE_API_ORIGIN}/chat/test`
+        );
+        if (response.status === "ok") {
+          setChatReady(1);
+        } else {
+          setChatReady(2);
+          setError("Chat service is not available");
+        }
+      } catch {
+        setChatReady(2);
+        setError("Chat service is not available");
+      }
+    };
+
+    fetchCheck();
   }, []);
 
   useEffect(() => {
@@ -156,6 +183,51 @@ const ChatPage = () => {
     }
   };
 
+  const inputIcon = useMemo(() => {
+    if (inputMessage.length > 0) {
+      return (
+        <Center
+          bg={theme.colors.default[5]}
+          p=".25rem"
+          style={{ borderRadius: "50%" }}
+        >
+          <IconArrowUp
+            stroke={2}
+            color="white"
+            onClick={handleSend}
+            size={32}
+            style={{ cursor: "pointer" }}
+          />
+        </Center>
+      );
+    } else if (chatReady === 0) {
+      return (
+        <Center
+          bg={theme.colors.default[5]}
+          p=".25rem"
+          style={{ borderRadius: "50%" }}
+        >
+          <Loader color="#fff" />
+        </Center>
+      );
+    } else if (chatReady === 2) {
+      return (
+        <Center
+          bg={theme.colors.default[5]}
+          p=".25rem"
+          style={{ borderRadius: "50%" }}
+        >
+          <IconExclamationCircle
+            stroke={2}
+            color="white"
+            size={32}
+            style={{ cursor: "pointer" }}
+          />
+        </Center>
+      );
+    }
+  }, [chatReady, inputMessage]);
+
   return (
     <>
       <Head title="Ask me a question" description="This is the chat page" />
@@ -164,10 +236,21 @@ const ChatPage = () => {
         pt="5rem"
         pb="10rem"
         px={mainMargin}
-        justify="flex-end"
+        justify={messages.length === 0 ? "space-between" : "flex-end"}
         mih="90vh"
       >
         <Stack>
+
+          {
+            messages.length === 0 && (
+              <Center>
+                <Stack ta="center">
+                  <Title order={2}>Meet my AI Assistant</Title>
+                  <Text size={theme.headings.sizes.h4.fontSize}>You can ask this assistant anything about me or my portfolio.</Text>
+                </Stack>
+              </Center>
+            )
+          }
           {messages.map((message) => (
             <Box
               bg={
@@ -192,8 +275,13 @@ const ChatPage = () => {
                 width: "fit-content",
                 maxWidth: "60%",
               }}
+              className={
+                message.sender === "user"
+                  ? styler.rightMessage
+                  : styler.leftMessage
+              }
             >
-              {message.content}
+              {sanitizeURL(message.content)}
               <Text
                 size="xs"
                 c={
@@ -228,7 +316,12 @@ const ChatPage = () => {
             </Box>
           )}
         </Stack>
-        <Box>
+        <Stack align="center">
+          {error && (
+            <Alert title="Error" color="red">
+              {error}
+            </Alert>
+          )}
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -253,7 +346,7 @@ const ChatPage = () => {
                 },
               }}
               size="xl"
-              disabled={loading}
+              disabled={loading || chatReady !== 1}
               mx="auto"
               maw={600}
               miw={isMobile ? "300px" : "600px"}
@@ -262,23 +355,7 @@ const ChatPage = () => {
                 setHistoryIndex(null);
               }}
               onKeyDown={handleKeyDown}
-              rightSection={
-                inputMessage.length > 0 && (
-                  <Center
-                    bg={theme.colors.default[5]}
-                    p=".25rem"
-                    style={{ borderRadius: "50%" }}
-                  >
-                    <IconArrowUp
-                      stroke={2}
-                      color="white"
-                      onClick={handleSend}
-                      size={32}
-                      style={{ cursor: "pointer" }}
-                    />
-                  </Center>
-                )
-              }
+              rightSection={inputIcon}
               leftSection={
                 <Tooltip label="Delete chat" withArrow>
                   <IconTrash
@@ -293,7 +370,7 @@ const ChatPage = () => {
               value={inputMessage}
             />
           </form>
-        </Box>
+        </Stack>
       </Stack>
     </>
   );
