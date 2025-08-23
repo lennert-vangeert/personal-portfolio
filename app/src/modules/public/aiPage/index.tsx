@@ -13,7 +13,7 @@ import {
   Tooltip,
   useMantineTheme,
 } from "@mantine/core";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   IconArrowUp,
@@ -62,6 +62,9 @@ const AIPage = () => {
   const theme = useMantineTheme();
   const sanitizeURL = useSanitizeURL();
 
+  // ref for the scrollable messages container
+  const messagesRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (stored) {
@@ -94,6 +97,13 @@ const AIPage = () => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(messages));
   }, [messages]);
 
+  // auto-scroll to bottom whenever messages change
+  useEffect(() => {
+    if (messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
+  }, [messages, loading]);
+
   const handleDeleteChat = useCallback(() => {
     setMessages([]);
     localStorage.removeItem(LOCAL_STORAGE_KEY);
@@ -112,6 +122,15 @@ const AIPage = () => {
       setInputMessage("");
       setHistoryIndex(null);
 
+      // setMessages((prevMessages) => [
+      //   ...prevMessages,
+      //   {
+      //     id: Date.now().toString(),
+      //     content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
+      //     sender: "bot",
+      //     timestamp: new Date(),
+      //   },
+      // ]);
       const response: AIResponse = await fetch(
         `${import.meta.env.VITE_API_ORIGIN}/chat`,
         "POST",
@@ -180,6 +199,10 @@ const AIPage = () => {
         }
       });
     }
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
   };
 
   const inputIcon = useMemo(() => {
@@ -222,156 +245,203 @@ const AIPage = () => {
     }
   }, [chatReady, inputMessage]);
 
+  // compute justify for the messages area
+  const messagesJustify = useMemo(
+    () => (messages.length === 0 ? "space-between" : "flex-end"),
+    [messages.length]
+  );
+
   return (
     <>
-      <Head title="Ask me a question" description="This is the chat page" />
-      <Stack
-        mt="2.5rem"
-        pt="5rem"
-        pb="10rem"
-        px={mainMargin}
-        justify={messages.length === 0 ? "space-between" : "flex-end"}
-        mih="90vh"
+      <Head title="Ask me a question" description="This is the chat page" keyWords="chat, AI, assistant, LennertAI" />
+      {/* outer container takes full viewport and hides body scroll */}
+      <Box
+        className={style.outerContainer}
+        style={{
+          height: "70vh",
+          overflow: "hidden",
+          paddingLeft: mainMargin,
+          paddingRight: mainMargin,
+        }}
       >
-        <Stack>
-          {messages.length === 0 && (
-            <Center>
-              <Stack ta="center">
-                <Title order={2}>Meet my AI Assistant</Title>
-                <Text size={theme.headings.sizes.h4.fontSize}>
-                  You can ask this assistant anything about me or my portfolio.
-                </Text>
-              </Stack>
-            </Center>
-          )}
-          {messages.map((message) => (
-            <Box
-              bg={
-                message.type === "error"
-                  ? "#ea2112ff" // red for error
-                  : message.sender === "user"
-                  ? theme.colors.default[5]
-                  : "lightgray"
-              }
-              c={
-                message.type === "error"
-                  ? "#fff"
-                  : message.sender === "user"
-                  ? "#fff"
-                  : "#000"
-              }
-              style={{
-                alignSelf:
-                  message.sender === "user" ? "flex-end" : "flex-start",
-                borderRadius: "8px",
-                padding: "0.5rem 1rem",
-                width: "fit-content",
-                maxWidth: "60%",
-              }}
-              className={
-                message.sender === "user"
-                  ? style.rightMessage
-                  : style.leftMessage
-              }
-            >
-              {sanitizeURL(message.content)}
-              <Text
-                size="xs"
-                c={
-                  message.type === "error"
-                    ? "#fff"
-                    : message.sender === "user"
-                    ? "#fff"
-                    : "dimmed"
-                }
-                ta={message.sender === "user" ? "left" : "right"}
-              >
-                {new Date(message.timestamp).toLocaleTimeString()}
-              </Text>
-            </Box>
-          ))}
+        {/* main vertical stack that fills the container */}
+        <Stack
+          style={{
+            height: "100vh",
+            paddingTop: "5rem",
+            paddingBottom: 0,
 
-          {loading && (
-            <Box
-              bg="gray"
-              style={{
-                alignSelf: "flex-start",
-                borderRadius: "8px",
-                padding: "0.5rem 1rem",
-                width: "fit-content",
-              }}
-            >
-              <Stack>
-                <Skeleton height=".5rem" w="8rem" />
-                <Skeleton height=".5rem" w="6rem" />
-                <Skeleton height=".5rem" w="7rem" />
-              </Stack>
-            </Box>
-          )}
-        </Stack>
-
-        <Stack align="center">
-          {error && (
-            <Alert title="Error" color="red" mb="2.5rem">
-              {error}
-            </Alert>
-          )}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSend();
-            }}
+            display: "flex",
+          }}
+        >
+          {/* scrollable messages area - only this div will scroll */}
+          <Box
+            ref={messagesRef}
             style={{
-              position: "fixed",
-              bottom: "2.5rem",
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "100%",
-              maxWidth: "600px",
+              flex: 1,
+              overflowY: "auto",
+              WebkitOverflowScrolling: "touch",
+              paddingBottom: "10rem", // leave room for the fixed form
             }}
           >
-            <Textarea
-              placeholder="Your question..."
-              autosize
-              minRows={1}
-              maxRows={5}
-              styles={{
-                input: {
-                  borderRadius: "50px",
-                  paddingRight: "4rem",
-                },
+            <Stack
+              justify={messagesJustify}
+              mih="70vh"
+              style={{ minHeight: "70vh" }}
+              mx=".75rem"
+            >
+              {messages.length === 0 && (
+                <Center>
+                  <Stack ta="center">
+                    <Title order={2}>Meet my AI Assistant</Title>
+                    <Text size={theme.headings.sizes.h4.fontSize}>
+                      You can ask this assistant anything about me or my
+                      portfolio.
+                    </Text>
+                  </Stack>
+                </Center>
+              )}
+              {messages.map((message) => (
+                <Box
+                  key={message.id}
+                  bg={
+                    message.type === "error"
+                      ? "#ea2112ff" // red for error
+                      : message.sender === "user"
+                      ? theme.colors.default[5]
+                      : "lightgray"
+                  }
+                  c={
+                    message.type === "error"
+                      ? "#fff"
+                      : message.sender === "user"
+                      ? "#fff"
+                      : "#000"
+                  }
+                  style={{
+                    alignSelf:
+                      message.sender === "user" ? "flex-end" : "flex-start",
+                    borderRadius: "8px",
+                    padding: "0.5rem 1rem",
+                    width: "fit-content",
+                    maxWidth: isMobile ? "85%" : "60%",
+                  }}
+                  className={
+                    message.sender === "user"
+                      ? style.rightMessage
+                      : style.leftMessage
+                  }
+                >
+                  {sanitizeURL(message.content)}
+                  <Text
+                    size="xs"
+                    c={
+                      message.type === "error"
+                        ? "#fff"
+                        : message.sender === "user"
+                        ? "#fff"
+                        : "dimmed"
+                    }
+                    ta={message.sender === "user" ? "left" : "right"}
+                  >
+                    {new Date(message.timestamp).toLocaleTimeString()}
+                  </Text>
+                </Box>
+              ))}
+
+              {loading && (
+                <Box
+                  bg="gray"
+                  style={{
+                    alignSelf: "flex-start",
+                    borderRadius: "8px",
+                    padding: "0.5rem 1rem",
+                    width: "fit-content",
+                  }}
+                >
+                  <Stack>
+                    <Skeleton height=".5rem" w="8rem" />
+                    <Skeleton height=".5rem" w="6rem" />
+                    <Skeleton height=".5rem" w="7rem" />
+                  </Stack>
+                </Box>
+              )}
+            </Stack>
+          </Box>
+
+          {/* fixed form stays above the scrollable area */}
+          <Stack align="center">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSend();
               }}
-              size="xl"
-              disabled={loading || chatReady !== 1}
-              mx="auto"
-              maw={600}
-              miw={isMobile ? "300px" : "600px"}
-              onChange={(e) => {
-                setInputMessage(e.currentTarget.value);
-                setHistoryIndex(null);
+              style={{
+                position: "fixed",
+                bottom: "2.5rem",
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: "100%",
+                maxWidth: "600px",
+                paddingLeft: isMobile ? mainMargin : 0,
+                paddingRight: isMobile ? mainMargin : 0,
               }}
-              onKeyDown={handleKeyDown}
-              rightSection={inputIcon}
-              leftSection={
-                <Tooltip label="Delete chat" withArrow>
-                  <IconTrash
-                    stroke={2}
-                    color="white"
-                    onClick={handleDeleteChat}
-                    size={32}
-                    style={{ cursor: "pointer" }}
-                  />
-                </Tooltip>
-              }
-              value={inputMessage}
-            />
-            <Text mt=".5rem" ta="center" size="sm" c="dimmed">
-              This AI can make mistakes, please verify the information it
-              provides.
-            </Text>
-          </form>
+            >
+              {error && (
+                <Alert
+                  mx="auto"
+                  title="Error"
+                  color="red"
+                  mb="1rem"
+                  maw="20rem"
+                >
+                  {error}
+                </Alert>
+              )}
+              <Textarea
+                bg="white"
+                placeholder="Your question..."
+                autosize
+                minRows={1}
+                maxRows={5}
+                styles={{
+                  input: {
+                    borderRadius: "50px",
+                    paddingRight: "4rem",
+                  },
+                }}
+                size="xl"
+                disabled={loading || chatReady !== 1}
+                mx="auto"
+                maw={600}
+                miw={isMobile ? "300px" : "600px"}
+                onChange={(e) => {
+                  setInputMessage(e.currentTarget.value);
+                  setHistoryIndex(null);
+                }}
+                onKeyDown={handleKeyDown}
+                rightSection={inputIcon}
+                leftSection={
+                  <Tooltip label="Delete chat" withArrow>
+                    <IconTrash
+                      stroke={2}
+                      color="white"
+                      onClick={handleDeleteChat}
+                      size={32}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Tooltip>
+                }
+                value={inputMessage}
+              />
+              <Text mt=".5rem" ta="center" size="sm" c="dimmed">
+                This AI can make mistakes, please verify the information it
+                provides.
+              </Text>
+            </form>
+          </Stack>
         </Stack>
-      </Stack>
+      </Box>
     </>
   );
 };

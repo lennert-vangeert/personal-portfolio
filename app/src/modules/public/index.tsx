@@ -4,12 +4,12 @@ import ProjectListPage from "./projectListPage";
 import IndexPage from "./indexPage";
 import AIPage from "./aiPage";
 
-const subPages: RouteObject[] = [
-  {
-    // path: "contact",
-    // element: <ContactPage />,
-  },
-];
+// const subPages: RouteObject[] = [
+//   {
+//     path: "contact",
+//     element: <ContactPage />,
+//   },
+// ];
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -35,7 +35,7 @@ export const publicRoutes: RouteObject[] = [
         element: <AIPage  />,
         handle: "LennertAI",
       },
-      ...subPages,
+      // ...subPages,
     ],
   },
 ];

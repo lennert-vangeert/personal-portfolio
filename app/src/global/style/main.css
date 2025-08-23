@@ -3,21 +3,44 @@ a {
   text-decoration: none;
 }
 
+/* Variables */
+:root {
+  --sb-track-color: #b9c2cc;
+  --sb-thumb-color: #dd6031;
+  --sb-size: 12px; /* slightly smaller for consistency across browsers */
+}
 
+/* Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+  width: var(--sb-size);
+  height: var(--sb-size);
+}
 
-/* Hide scrollbars on all browsers but keep scrolling functionality */
+*::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--sb-thumb-color);
+  border-radius: 3px;
+  border: 3px solid var(--sb-track-color); /* padding effect */
+}
 
 /* Firefox */
 * {
-  scrollbar-width: none; /* hides scrollbar */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: thin; /* options: auto, thin, none */
+  scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
 }
 
-/* Chrome, Safari and Opera */
-*::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  background: transparent;
+/* Optionally hide scrollbar completely but keep scrolling */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
 
 /* segmentedControl */
