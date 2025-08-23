@@ -65,6 +65,10 @@ const AIPage = () => {
   // ref for the scrollable messages container
   const messagesRef = useRef<HTMLDivElement | null>(null);
 
+  // ref for the fixed form so we can measure its height and add sufficient bottom padding
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const [bottomPaddingPx, setBottomPaddingPx] = useState<number>(160); // fallback
+
   useEffect(() => {
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (stored) {
@@ -97,12 +101,37 @@ const AIPage = () => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(messages));
   }, [messages]);
 
-  // auto-scroll to bottom whenever messages change
+  // measure the fixed form height and set padding for the messages container
+  useEffect(() => {
+    const measure = () => {
+      if (formRef.current) {
+        const rect = formRef.current.getBoundingClientRect();
+        // add a little extra spacing so messages don't butt up exactly to the form
+        setBottomPaddingPx(Math.ceil(rect.height + 24));
+      } else {
+        // fallback (keeps previous if available)
+        setBottomPaddingPx((prev) => prev || 160);
+      }
+    };
+
+    // measure initially and on resize (responsive)
+    measure();
+    window.addEventListener("resize", measure);
+    return () => {
+      window.removeEventListener("resize", measure);
+    };
+  }, [isMobile, mainMargin]);
+
+  // auto-scroll to bottom whenever messages change or bottom padding changes
   useEffect(() => {
     if (messagesRef.current) {
-      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+      // ensure layout is stable before scrolling (small delay)
+      // using requestAnimationFrame is usually enough
+      requestAnimationFrame(() => {
+        messagesRef.current!.scrollTop = messagesRef.current!.scrollHeight;
+      });
     }
-  }, [messages, loading]);
+  }, [messages, loading, bottomPaddingPx]);
 
   const handleDeleteChat = useCallback(() => {
     setMessages([]);
@@ -112,8 +141,9 @@ const AIPage = () => {
   const handleSend = useCallback(async () => {
     setLoading(true);
     if (inputMessage.trim()) {
+      const nowId = Date.now().toString();
       const newMessage: Message = {
-        id: Date.now().toString(),
+        id: nowId,
         content: inputMessage,
         sender: "user",
         timestamp: new Date(),
@@ -122,10 +152,11 @@ const AIPage = () => {
       setInputMessage("");
       setHistoryIndex(null);
 
+      // demo bot reply. keep this behaviour while testing.
       // setMessages((prevMessages) => [
       //   ...prevMessages,
       //   {
-      //     id: Date.now().toString(),
+      //     id: (Date.now() + 1).toString(),
       //     content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
       //     sender: "bot",
       //     timestamp: new Date(),
@@ -137,7 +168,7 @@ const AIPage = () => {
         undefined,
         JSON.stringify({ message: inputMessage })
       );
-
+      
       if (response.error) {
         setError(response.error);
         setMessages((prevMessages) => [
@@ -163,6 +194,8 @@ const AIPage = () => {
           },
         ]);
       }
+      setLoading(false);
+    } else {
       setLoading(false);
     }
   }, [inputMessage]);
@@ -245,7 +278,6 @@ const AIPage = () => {
     }
   }, [chatReady, inputMessage]);
 
-  // compute justify for the messages area
   const messagesJustify = useMemo(
     () => (messages.length === 0 ? "space-between" : "flex-end"),
     [messages.length]
@@ -253,7 +285,11 @@ const AIPage = () => {
 
   return (
     <>
-      <Head title="Ask me a question" description="This is the chat page" keyWords="chat, AI, assistant, LennertAI" />
+      <Head
+        title="Ask me a question"
+        description="This is the chat page"
+        keyWords="chat, AI, assistant, LennertAI"
+      />
       {/* outer container takes full viewport and hides body scroll */}
       <Box
         className={style.outerContainer}
@@ -267,10 +303,9 @@ const AIPage = () => {
         {/* main vertical stack that fills the container */}
         <Stack
           style={{
-            height: "100vh",
+            height: "100%", // changed from 100vh to 100% so it fits within the outer container
             paddingTop: "5rem",
             paddingBottom: 0,
-
             display: "flex",
           }}
         >
@@ -281,15 +316,10 @@ const AIPage = () => {
               flex: 1,
               overflowY: "auto",
               WebkitOverflowScrolling: "touch",
-              paddingBottom: "10rem", // leave room for the fixed form
+              paddingBottom: `${bottomPaddingPx}px`,
             }}
           >
-            <Stack
-              justify={messagesJustify}
-              mih="70vh"
-              style={{ minHeight: "70vh" }}
-              mx=".75rem"
-            >
+            <Stack justify={messagesJustify} mx=".75rem">
               {messages.length === 0 && (
                 <Center>
                   <Stack ta="center">
@@ -372,6 +402,7 @@ const AIPage = () => {
           {/* fixed form stays above the scrollable area */}
           <Stack align="center">
             <form
+              ref={formRef}
               onSubmit={(e) => {
                 e.preventDefault();
                 handleSend();
@@ -385,15 +416,19 @@ const AIPage = () => {
                 maxWidth: "600px",
                 paddingLeft: isMobile ? mainMargin : 0,
                 paddingRight: isMobile ? mainMargin : 0,
+                zIndex: 999, // ensure overlay is on top
               }}
             >
               {error && (
                 <Alert
+                  variant="outline"
                   mx="auto"
                   title="Error"
                   color="red"
                   mb="1rem"
                   maw="20rem"
+                  icon={<IconExclamationCircle size={16} />}
+                  bg={theme.white}
                 >
                   {error}
                 </Alert>
