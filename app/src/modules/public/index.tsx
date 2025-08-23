@@ -1,8 +1,8 @@
 import { RouteObject } from "react-router-dom";
 import PageWrapper from "../sections/pageWrapper";
-import ChatPage from "./chatPage";
 import ProjectListPage from "./projectListPage";
 import IndexPage from "./indexPage";
+import AIPage from "./aiPage";
 
 const subPages: RouteObject[] = [
   {
@@ -32,7 +32,7 @@ export const publicRoutes: RouteObject[] = [
       // },
       {
         path: "ask-a-question",
-        element: <ChatPage />,
+        element: <AIPage  />,
         handle: "LennertAI",
       },
       ...subPages,

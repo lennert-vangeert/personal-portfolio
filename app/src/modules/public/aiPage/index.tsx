@@ -22,7 +22,7 @@ import {
 } from "@tabler/icons-react";
 import { fetch } from "@global/utils/fetcher";
 import useSanitizeURL from "@common/utils/sanitizeUrl";
-import styler from "./ChatPage.module.css";
+import style from "./aiPage.module.css";
 
 type Message = {
   id: string;
@@ -40,7 +40,7 @@ type AIResponse = {
 
 const LOCAL_STORAGE_KEY = "chat-messages";
 
-const ChatPage = () => {
+const AIPage = () => {
   const { mainMargin, isMobile } = useSelector((state: RootState) => state.ui);
   const [inputMessage, setInputMessage] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>(() => {
@@ -68,8 +68,7 @@ const ChatPage = () => {
       try {
         const parsed: Message[] = JSON.parse(stored);
         setMessages(parsed);
-      } catch {
-      }
+      } catch {}
     }
     const fetchCheck = async () => {
       try {
@@ -215,14 +214,9 @@ const ChatPage = () => {
         <Center
           bg={theme.colors.default[5]}
           p=".25rem"
-          style={{ borderRadius: "50%" }}
+          style={{ borderRadius: "50%", cursor: "not-allowed" }}
         >
-          <IconExclamationCircle
-            stroke={2}
-            color="white"
-            size={32}
-            style={{ cursor: "pointer" }}
-          />
+          <IconExclamationCircle stroke={2} color="white" size={32} />
         </Center>
       );
     }
@@ -240,17 +234,16 @@ const ChatPage = () => {
         mih="90vh"
       >
         <Stack>
-
-          {
-            messages.length === 0 && (
-              <Center>
-                <Stack ta="center">
-                  <Title order={2}>Meet my AI Assistant</Title>
-                  <Text size={theme.headings.sizes.h4.fontSize}>You can ask this assistant anything about me or my portfolio.</Text>
-                </Stack>
-              </Center>
-            )
-          }
+          {messages.length === 0 && (
+            <Center>
+              <Stack ta="center">
+                <Title order={2}>Meet my AI Assistant</Title>
+                <Text size={theme.headings.sizes.h4.fontSize}>
+                  You can ask this assistant anything about me or my portfolio.
+                </Text>
+              </Stack>
+            </Center>
+          )}
           {messages.map((message) => (
             <Box
               bg={
@@ -277,8 +270,8 @@ const ChatPage = () => {
               }}
               className={
                 message.sender === "user"
-                  ? styler.rightMessage
-                  : styler.leftMessage
+                  ? style.rightMessage
+                  : style.leftMessage
               }
             >
               {sanitizeURL(message.content)}
@@ -316,9 +309,10 @@ const ChatPage = () => {
             </Box>
           )}
         </Stack>
+
         <Stack align="center">
           {error && (
-            <Alert title="Error" color="red">
+            <Alert title="Error" color="red" mb="2.5rem">
               {error}
             </Alert>
           )}
@@ -327,19 +321,21 @@ const ChatPage = () => {
               e.preventDefault();
               handleSend();
             }}
+            style={{
+              position: "fixed",
+              bottom: "2.5rem",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "100%",
+              maxWidth: "600px",
+            }}
           >
             <Textarea
-              pos="fixed"
-              bottom="2.5rem"
-              left="50%"
               placeholder="Your question..."
               autosize
               minRows={1}
               maxRows={5}
               styles={{
-                root: {
-                  transform: "translateX(-50%)",
-                },
                 input: {
                   borderRadius: "50px",
                   paddingRight: "4rem",
@@ -369,6 +365,10 @@ const ChatPage = () => {
               }
               value={inputMessage}
             />
+            <Text mt=".5rem" ta="center" size="sm" c="dimmed">
+              This AI can make mistakes, please verify the information it
+              provides.
+            </Text>
           </form>
         </Stack>
       </Stack>
@@ -376,4 +376,4 @@ const ChatPage = () => {
   );
 };
 
-export default ChatPage;
+export default AIPage;
