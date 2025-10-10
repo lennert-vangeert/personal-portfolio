@@ -21,10 +21,8 @@ import {
   IconArrowRight,
   IconBrandOffice,
   IconMusic,
-  IconQuestionMark,
   IconSchool,
 } from "@tabler/icons-react";
-import BlurredText from "@common/blurredText";
 import { Link } from "react-router-dom";
 import ProjectsGrid from "@common/projectsGrid";
 
@@ -43,8 +41,8 @@ const IndexPage = () => {
   return (
     <>
       <Head
-        title="Home"
-        description="This is the homepage"
+        title="Portfolio"
+        description="This is the personal portfolio of Lennert Van Geert, a software developer based in Flanders, Belgium. Here you can find information about me, my tech stack, and how to contact me."
         keyWords="Lennert Van Geert, Portfolio, homepage, information, techstack, contact me"
       />
       <Box mb="2rem" mt="2.5rem" mx={mainMargin}>
@@ -160,7 +158,7 @@ const IndexPage = () => {
           My journey so far
         </Title>
         <Timeline mt="1.5rem" active={10} bulletSize={24} lineWidth={2}>
-          <Timeline.Item
+          {/* <Timeline.Item
             lineVariant="dashed"
             bullet={<IconQuestionMark color="white" />}
             title={
@@ -176,12 +174,23 @@ const IndexPage = () => {
             <Text size="xs" mt={4}>
               <BlurredText length={15} />
             </Text>
+          </Timeline.Item> */}
+          <Timeline.Item
+            bullet={<IconBrandOffice color="white" />}
+            title="Full-Stack Developer"
+          >
+            <Text component={Link} to="https://www.codifly.be" c="dimmed" size="sm">
+              Codifly
+            </Text>
+            <Text size="xs" mt={4}>
+              oct 2025 - present
+            </Text>
           </Timeline.Item>
           <Timeline.Item
             bullet={<IconBrandOffice color="white" />}
             title="Web & Mobile Developer Student Job"
           >
-            <Text c="dimmed" size="sm">
+            <Text component={Link} to="https://www.codifly.be" c="dimmed" size="sm">
               Codifly
             </Text>
             <Text size="xs" mt={4}>
@@ -192,7 +201,7 @@ const IndexPage = () => {
             bullet={<IconBrandOffice color="white" />}
             title="Web & Mobile Developer Intern"
           >
-            <Text c="dimmed" size="sm">
+            <Text component={Link} to="https://www.codifly.be" c="dimmed" size="sm">
               Codifly
             </Text>
             <Text size="xs" mt={4}>
@@ -204,7 +213,7 @@ const IndexPage = () => {
             bullet={<IconSchool color="white" />}
             title="Bachelor Graphical and Digital Media: Multimedia production"
           >
-            <Text c="dimmed" size="sm">
+            <Text component={Link} to="https://www.arteveldehogeschool.be/en" c="dimmed" size="sm">
               Artvelde University of Applied Sciences
             </Text>
             <Text size="xs" mt={4}>
@@ -216,7 +225,7 @@ const IndexPage = () => {
             bullet={<IconSchool color="white" />}
             title="Pre-university education - Business Economics"
           >
-            <Text c="dimmed" size="sm">
+            <Text component={Link} to="https://www.sintjozefmere.be/" c="dimmed" size="sm">
               Sint-Jozefschool Mere
             </Text>
             <Text size="xs" mt={4}>

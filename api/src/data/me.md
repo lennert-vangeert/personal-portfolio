@@ -1,7 +1,7 @@
 # Personal Information
 
 Name: Lennert Van Geert  
-Date of Birth: October 2004  
+Date of Birth: 19th October 2004  
 Living in: Wichelen, Belgium  
 Nationality: Belgian  
 Occupation: Web & Mobile Developer / Full-stack JavaScript Developer  
@@ -39,6 +39,8 @@ Favorite Movies: Christopher Nolan films (Interstellar is the favorite)
 **Full-Stack Development**
 
 - PHP (Laravel using Blade Templates, Craft CMS using Twig) CMS and MVC applications
+- React for front-end development and Node.js for back-end development
+- RESTful APIs and GraphQL APIs
 
 **IoT**
 
@@ -55,6 +57,7 @@ Favorite Movies: Christopher Nolan films (Interstellar is the favorite)
 
 **Codifly BV**
 
+- **06/10/2025 – present**: Full-stack Developer
 - **14/07/2025 – 21/08/2025**: Web & Mobile Developer
 - **27/01/2025 – 04/04/2025**: Web & Mobile Developer (Internship)
 

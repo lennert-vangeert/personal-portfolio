@@ -1,0 +1,177 @@
+{
+  "meta": {
+    "generated_on": "2025-10-10T00:00:00+02:00",
+    "context_version": "bot-context-v1"
+  },
+  "public_profile": {
+    "name": "Lennert Van Geert",
+    "age": 21,
+    "headline": "Full-stack JavaScript Developer — React, Node.js, Three.js",
+    "short_bio": "Full-stack developer from Belgium focused on React & Node.js. I build interactive web apps, 3D browser experiences and IoT prototypes.",
+    "long_bio": "Graduated Cum Laude in Multimedia Production (2025). Experienced in React, TypeScript, Three.js, Node.js, PostgreSQL, and Docker. I design and build full-stack products with attention to UX and performance.",
+    "location": "East-Flanders, Belgium",
+    "timezone": "Europe/Brussels",
+    "languages": ["Dutch (native)", "English"],
+    "contact": {
+      "preferred": "email",
+      "email": "lennert@lennertvg.be",
+      "github": "https://github.com/lennert-vangeert",
+      "portfolio": "https://lennertvg.be",
+      "linkedin": "https://www.linkedin.com/in/lennert-van-geert/"
+    },
+    "availability": {
+      "status": "open_to_work",
+      "remote_ok": true,
+      "work_types": ["full-time", "contract"]
+    },
+    "preferred_tone": "encouraging, conversational, slightly technical; include code examples when asked; concise otherwise.",
+    "last_updated": "2025-10-10",
+    "pets": [
+      {
+        "name": "Frietsy",
+        "type": "dog",
+        "age": 10,
+        "bio": "Curious and playful dog that loves treats and back scratches."
+      }
+    ]
+  },
+  "skills": {
+    "frontend": [
+      "HTML5",
+      "CSS3",
+      "Tailwind",
+      "SASS",
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Three.js",
+      "React Three Fiber",
+      "GSAP"
+    ],
+    "state_management": ["Redux", "Zustand"],
+    "backend": ["Node.js", "Express", "Koa", "PostgreSQL", "MySQL", "MongoDB"],
+    "fullstack": [
+      "PHP (Laravel)",
+      "Craft CMS (Twig)",
+      "REST",
+      "GraphQL",
+      "Docker"
+    ],
+    "iot": ["Raspberry Pi", "Arduino", "MQTT"],
+    "design_tools": ["Figma", "Adobe XD", "Illustrator", "Photoshop", "Blender"]
+  },
+  "projects": [
+    {
+      "id": "portfolio",
+      "name": "Portfolio",
+      "short_description": "Personal portfolio showcasing projects and skills.",
+      "tech": ["React", "TypeScript", "Mantine", "Vite", "Node.js", "Express"],
+      "url": "https://lennertvg.be",
+      "year": 2025
+    },
+    {
+      "id": "whisker-wings",
+      "name": "Whisker Wings",
+      "short_description": "3D browser game featuring a Bunny flying a plane through rings.",
+      "tech": ["Blender", "Three.js", "React Three Fiber", "Zustand", "Rapier"],
+      "url": "https://whiskerwings.vercel.app/",
+      "year": 2024
+    },
+    {
+      "id": "sam-clb",
+      "name": "Sam website (CLB of West Flanders)",
+      "short_description": "Site to help students & parents transition to secondary school., made in collaboration with CLB of West Flanders and other students for my capstone project.",
+      "tech": ["React", "Mantine", "Redux", "Vite"],
+      "url": "https://sam.clbwestvlaanderen.be",
+      "year": 2025
+    },
+    {
+      "id": "mol-quiz",
+      "name": "The Mol Quiz",
+      "short_description": "Weekly quiz web app with automated emails, live scoreboard and admin interface.",
+      "tech": ["React", "Node.js", "Email automation"],
+      "url": null,
+      "year": 2025
+    },
+    {
+      "id": "defcon-escape",
+      "name": "Defcon IoT escape room",
+      "short_description": "IoT-based escape room challenge with real-time device monitoring Made in collaboration with other students which can be found at the link.",
+      "tech": ["Raspberry Pi", "Arduino", "MQTT"],
+      "url": "https://defcon1-mu.vercel.app/",
+      "year": 2024
+    },
+    {
+      "id": "isometric-room",
+      "name": "Isometric castle room",
+      "short_description": "Isometric 3D story experience.",
+      "tech": ["Blender", "Three.js", "GSAP"],
+      "url": "https://castle-isometric-room.vercel.app/",
+      "year": 2024
+    },
+    {
+      "id": "ts-quiz",
+      "name": "Typescript Development Quiz",
+      "short_description": "Browser quiz built with vanilla TypeScript.",
+      "tech": ["TypeScript", "HTML5", "CSS3"],
+      "url": "https://dev-quiz-y0am.onrender.com/",
+      "year": 2023
+    }
+  ],
+  "achievements": [
+    {
+      "title": "Best Studio Project",
+      "issuer": "Artevelde University of Applied Sciences",
+      "description": "Awarded for the best studio capstone project.",
+      "year": 2025
+    },
+    {
+      "title": "Hack the Future participant",
+      "year": 2024
+    }
+  ],
+  "bot_instructions": {
+    "expose_rules": {
+      "allowed": [
+        "public_profile",
+        "skills",
+        "projects",
+        "achievements",
+        "bot_instructions",
+        "canned_faqs"
+      ]
+    },
+    "response_guidelines": [
+      "Always be concise and helpful. Use an encouraging, conversational tone.",
+      "When referencing a project include the project's URL if available.",
+      "If a user asks about availability or hiring, reference contact.preferred and provide email.",
+      "Prefer clarity: use ISO dates (YYYY-MM-DD) when giving dates."
+    ]
+  },
+  "canned_faqs": [
+    {
+      "q": "What tech do you use?",
+      "a": "Primarily React, TypeScript, Node.js, Three.js; plus PostgreSQL/MongoDB and Docker for deployment."
+    },
+    {
+      "q": "Are you available for work?",
+      "a": "Yes — open to full-time roles. Best contact: lennert@lennertvg.be."
+    },
+    {
+      "q": "Can I see your projects?",
+      "a": "Sure — portfolio: https://lennertvg.be. Playable projects include Whisker Wings and the Dev Quiz."
+    },
+    {
+      "q": "Do you do 3D web work?",
+      "a": "Yes — I use Three.js, React Three Fiber and Blender to build interactive 3D experiences."
+    },
+    {
+      "q": "How should I contact you?",
+      "a": "Email is preferred: lennert@lennertvg.be, or via LinkedIn."
+    }
+  ],
+  "example_responses": {
+    "project_tech_snippet": "Whisker Wings is built with Three.js + React Three Fiber. Blender provided the 3D assets. Play: https://whiskerwings.vercel.app/",
+    "availability": "Open to full-time. Remote OK. Contact: lennert@lennertvg.be"
+  }
+}
