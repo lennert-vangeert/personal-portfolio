@@ -22,6 +22,8 @@ import {
 } from "@tabler/icons-react";
 import { fetch } from "@global/utils/fetcher";
 import useSanitizeURL from "@common/utils/sanitizeUrl";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import style from "./aiPage.module.css";
 
 type Message = {
@@ -168,7 +170,7 @@ const AIPage = () => {
         undefined,
         JSON.stringify({ message: inputMessage })
       );
-      
+
       if (response.error) {
         setError(response.error);
         setMessages((prevMessages) => [
@@ -362,7 +364,15 @@ const AIPage = () => {
                       : style.leftMessage
                   }
                 >
-                  {sanitizeURL(message.content)}
+                  {message.sender === "bot" && message.type !== "error" ? (
+                    <div className={style.markdownContent}>
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {message.content}
+                      </ReactMarkdown>
+                    </div>
+                  ) : (
+                    sanitizeURL(message.content)
+                  )}
                   <Text
                     size="xs"
                     c={

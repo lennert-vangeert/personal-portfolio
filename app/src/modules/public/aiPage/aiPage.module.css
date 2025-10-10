@@ -31,9 +31,158 @@
     transform: none;
   }
 
-.rightMessage {
-  animation: none !important;
-  transition: none !important;
-  transform: none;
+  .rightMessage {
+    animation: none !important;
+    transition: none !important;
+    transform: none;
+  }
 }
+
+/* Markdown Content Styles */
+.markdownContent {
+  font-family: "Oxanium", sans-serif;
+  line-height: 1.6;
+  color: #000;
+}
+
+.markdownContent h1,
+.markdownContent h2,
+.markdownContent h3,
+.markdownContent h4,
+.markdownContent h5,
+.markdownContent h6 {
+  font-family: "Oxanium", sans-serif;
+  font-weight: 900;
+  line-height: 1.5;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #000;
+}
+
+.markdownContent h1 {
+  font-size: 2rem;
+}
+
+.markdownContent h2 {
+  font-size: 1.75rem;
+}
+
+.markdownContent h3 {
+  font-size: 1.6rem;
+}
+
+.markdownContent h4 {
+  font-size: 1.5rem;
+}
+
+.markdownContent h5 {
+  font-size: 1.25rem;
+}
+
+.markdownContent h6 {
+  font-size: 1rem;
+}
+
+.markdownContent p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.markdownContent a {
+  color: #dd6031;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.markdownContent a:hover {
+  color: #f77c4f;
+  text-decoration: underline;
+}
+
+.markdownContent ul,
+.markdownContent ol {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.markdownContent li {
+  margin-bottom: 0.25rem;
+}
+
+.markdownContent code {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  font-family: "Courier New", monospace;
+  font-size: 0.875em;
+}
+
+.markdownContent pre {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.markdownContent pre code {
+  background-color: transparent;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.markdownContent blockquote {
+  border-left: 4px solid #dd6031;
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.markdownContent hr {
+  border: none;
+  border-top: 2px solid rgba(0, 0, 0, 0.1);
+  margin: 1.5rem 0;
+}
+
+.markdownContent table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.markdownContent th,
+.markdownContent td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.markdownContent th {
+  background-color: rgba(0, 0, 0, 0.1);
+  font-weight: 700;
+}
+
+.markdownContent tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.markdownContent img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* GFM specific styles */
+.markdownContent input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.markdownContent del {
+  color: rgba(0, 0, 0, 0.6);
 }
