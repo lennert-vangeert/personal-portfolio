@@ -1,14 +1,12 @@
-import { RootState } from "@global/store/store";
-import { AppShellHeader, Center, SegmentedControl } from "@mantine/core";
-import { useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useTranslate } from "@global/localization";
+import { AppShellHeader, Center, useMantineTheme } from "@mantine/core";
+import PillNav from "./navigation";
 
 export const headerHeight = "10vh";
 
 const Header = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { isMobile } = useSelector((state: RootState) => state.ui);
+  const theme = useMantineTheme();
+  const { t, tL } = useTranslate();
   return (
     <AppShellHeader
       withBorder={false}
@@ -18,17 +16,15 @@ const Header = () => {
       bg="transparent"
     >
       <Center>
-        <SegmentedControl
-          ta="center"
-          size={isMobile ? "sm" : "xl"}
-          withItemsBorders={false}
-          value={location.pathname}
-          onChange={(value) => navigate(value)}
-          data={[
-            { label: "Home", value: "/" },
-            { label: "Projects", value: "/projects" },
-            { label: "LennertAI", value: "/ask-a-question" },
+        <PillNav
+          items={[
+            { label: t("header.nav.home"), href: tL("/") },
+            { label: t("header.nav.projects"), href: tL("/projects") },
+            { label: t("header.nav.lennertai"), href: tL("/ask-a-question") },
           ]}
+          baseColor="#434243ff"
+          pillColor={theme.colors.default[5]}
+          pillTextColor="#fff"
         />
       </Center>
     </AppShellHeader>

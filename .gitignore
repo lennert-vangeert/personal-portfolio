@@ -18,14 +18,15 @@ jspm_packages/
 # React
 build/
 dist/
-.DS_Store
 
-# Environment variables
+
+# Sensitive files
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+*.pem
 
 # Miscellaneous
 .idea/

@@ -1,0 +1,134 @@
+{
+  "header": {
+    "nav": {
+      "home": "Home",
+      "projects": "Projects",
+      "lennertai": "LennertAI"
+    }
+  },
+  "homepage": {
+    "head": {
+      "title": "Portfolio",
+      "description": "This is the personal portfolio of Lennert Van Geert, a software developer based in Flanders, Belgium. Here you can find information about me, my tech stack, and how to contact me.",
+      "keyWords": "Lennert Van Geert, Portfolio, homepage, information, techstack, contact me"
+    },
+    "intro": {
+      "greeting": "Hi, I'm",
+      "description": "I'm a software developer with a passion for creating innovative solutions based in Flanders, Belgium."
+    },
+    "contact": {
+      "title": "Contact me",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "email": "Email"
+    },
+    "journey": {
+      "title": "My journey so far",
+      "jobs": {
+        "fullstack": {
+          "title": "Full-Stack Developer",
+          "company": "Codifly",
+          "period": "oct 2025 - present"
+        },
+        "studentJob": {
+          "title": "Web & Mobile Developer Student Job",
+          "company": "Codifly",
+          "period": "jul 2025 - aug 2025"
+        },
+        "intern": {
+          "title": "Web & Mobile Developer Intern",
+          "company": "Codifly",
+          "period": "feb 2025 - apr 2025"
+        }
+      },
+      "education": {
+        "bachelor": {
+          "title": "Bachelor Graphical and Digital Media: Multimedia production",
+          "school": "Artvelde University of Applied Sciences",
+          "period": "2022 - 2025"
+        },
+        "preuni": {
+          "title": "Pre-university education - Business Economics",
+          "school": "Sint-Jozefschool Mere",
+          "period": "2016 - 2022"
+        }
+      }
+    },
+    "techstack": {
+      "title": "My Techstack"
+    },
+    "projects": {
+      "title": "My Projects"
+    }
+  },
+  "projectsPage": {
+    "head": {
+      "title": "Projects",
+      "description": "Explore my projects",
+      "keyWords": "Lennert Van Geert, Portfolio, projects, web development, node"
+    },
+    "title": "My Projects"
+  },
+  "projects": {
+    "sam": {
+      "title": "The Sam Website",
+      "description": "An informative website that helps students and their parents with the transfer to high school in Belgium. A project for the CLB (Centrum voor Leerlingenbegeleiding) of West Flanders."
+    },
+    "molQuiz": {
+      "title": "The Mol Quiz",
+      "description": "A Webapp and api where friends and family could test their knowledge of the popular Belgian TV show \"De Mol\" after every weekly episode."
+    },
+    "defcon": {
+      "title": "Defcon IoT Escape Room",
+      "description": "An IoT escape room where players solve puzzles to save the world from the Soviet Union during the Cold War. The game is played in a real room with physical devices and a web interface."
+    },
+    "whiskerWings": {
+      "title": "Whisker Wings",
+      "description": "A 3D browser game where you fly a plane operated by a bunny. The goal is to collect all rings as fast as possible. Without crashing of course."
+    },
+    "isometricRoom": {
+      "title": "Isometric Castle Room",
+      "description": "An isometric 3D room built with Three.js. Explore the room, interact with Points of Interest and explore the small story."
+    },
+    "devQuiz": {
+      "title": "Dev Quiz",
+      "description": "A quiz application built with Vanilla TypeScript. Test your knowledge on various development topics."
+    },
+    "laura": {
+      "title": "Laura's Portfolio",
+      "description": "A personal portfolio i built for my girlfriend. Showcasing her design projects. This website makes use of the Contentful CMS so she can manage the content herself."
+    }
+  },
+  "aiPage": {
+    "head": {
+      "title": "Ask me a question",
+      "description": "This is the chat page",
+      "keyWords": "chat, AI, assistant, LennertAI"
+    },
+    "welcome": {
+      "title": "Meet my AI Assistant",
+      "description": "You can ask this assistant anything about me or my portfolio."
+    },
+    "input": {
+      "placeholder": "Your question...",
+      "deleteTooltip": "Delete chat"
+    },
+    "disclaimer": "This AI can make mistakes, please verify the information it provides.",
+    "errors": {
+      "serviceUnavailable": "Chat service is not available",
+      "alertTitle": "Error"
+    }
+  },
+  "contactPage": {
+    "head": {
+      "title": "Get in touch",
+      "description": "Talk to me"
+    }
+  },
+  "projectDetailPage": {
+    "head": {
+      "title": "Project Detail",
+      "description": "Details about the project"
+    }
+  }
+}

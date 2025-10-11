@@ -19,10 +19,12 @@ import quiz from "/images/quiz.png";
 import LauraIcon from "./lauraIcon.svg?react";
 import { useSelector } from "react-redux";
 import { RootState } from "@global/store/store";
+import { useTranslate } from "@global/localization";
 
 const ProjectsGrid = () => {
   const theme = useMantineTheme();
   const { isTablet } = useSelector((state: RootState) => state.ui);
+  const { t } = useTranslate();
   return (
     <Box mt="1.5rem" className={style.grid}>
       <Box
@@ -35,14 +37,10 @@ const ProjectsGrid = () => {
         target="_blank"
       >
         <Stack h="100%" justify="space-between">
-          <Title order={2}>The Sam Website</Title>
-          <Image mah="30rem" src={sam} alt="The Sam Website" />
+          <Title order={2}>{t("projects.sam.title")}</Title>
+          <Image mah="30rem" src={sam} alt={t("projects.sam.title")} />
           <Box>
-            <Text my="1rem">
-              An informative website that helps students and their parents with
-              the transfer to high school in Belgium. A project for the CLB
-              (Centrum voor Leerlingenbegeleiding) of West Flanders.
-            </Text>
+            <Text my="1rem">{t("projects.sam.description")}</Text>
             <Flex maw="25rem" gap=".5rem" wrap="wrap">
               {["React", "Mantine", "Redux", "Vite"].map((tech) => (
                 <Badge
@@ -69,14 +67,15 @@ const ProjectsGrid = () => {
         className={`${style.item} ${style.item2}`}
       >
         <Stack h="100%" justify="space-between">
-          <Title order={2}>The Mol Quiz</Title>
-          <Image fit="contain" mah="30rem" src={deMol} alt="De Mol Quiz" />
+          <Title order={2}>{t("projects.molQuiz.title")}</Title>
+          <Image
+            fit="contain"
+            mah="30rem"
+            src={deMol}
+            alt={t("projects.molQuiz.title")}
+          />
           <Box>
-            <Text my="1rem">
-              A Webapp and api where friends and family could test their
-              knowledge of the popular Belgian TV show "De Mol" after every
-              weekly episode.
-            </Text>
+            <Text my="1rem">{t("projects.molQuiz.description")}</Text>
             <Flex maw="25rem" gap=".5rem" wrap="wrap">
               {[
                 "React",
@@ -114,14 +113,10 @@ const ProjectsGrid = () => {
         target="_blank"
       >
         <Stack h="100%" justify="space-between">
-          <Title order={2}>Defcon IoT Escape Room</Title>
-          <Image src={defcon} alt="Defcon IoT Escape Room" />
+          <Title order={2}>{t("projects.defcon.title")}</Title>
+          <Image src={defcon} alt={t("projects.defcon.title")} />
           <Box>
-            <Text my="1rem">
-              An IoT escape room where players solve puzzles to save the world
-              from the Soviet Union during the Cold War. The game is played in a
-              real room with physical devices and a web interface.
-            </Text>
+            <Text my="1rem">{t("projects.defcon.description")}</Text>
             <Flex maw="25rem" gap=".5rem" wrap="wrap">
               {[
                 "SCRUM",
@@ -158,13 +153,16 @@ const ProjectsGrid = () => {
         target="_blank"
       >
         <Stack h="100%" justify="space-between">
-          <Title order={2}>Whisker Wings</Title>
-          <Image src={plane} alt="Whisker Wings" mah="20rem" fit="contain" />
+          <Title order={2}>{t("projects.whiskerWings.title")}</Title>
+          <Image
+            src={plane}
+            alt={t("projects.whiskerWings.title")}
+            mah="20rem"
+            fit="contain"
+          />
           <Box>
             <Text my="1rem" maw={isTablet ? undefined : "80%"}>
-              A 3D browser game where you fly a plane operated by a bunny. The
-              goal is to collect all rings as fast as possible. Without crashing
-              of course.
+              {t("projects.whiskerWings.description")}
             </Text>
             <Flex maw="25rem" gap=".5rem" wrap="wrap">
               {[
@@ -202,13 +200,10 @@ const ProjectsGrid = () => {
         target="_blank"
       >
         <Stack h="100%" justify="space-between">
-          <Title order={2}>Isometric Castle Room</Title>
-          <Image src={room} alt="Isometric Castle Room" />
+          <Title order={2}>{t("projects.isometricRoom.title")}</Title>
+          <Image src={room} alt={t("projects.isometricRoom.title")} />
           <Box>
-            <Text my="1rem">
-              An isometric 3D room built with Three.js. Explore the room,
-              interact with Points of Interest and explore the small story.
-            </Text>
+            <Text my="1rem">{t("projects.isometricRoom.description")}</Text>
             <Flex maw="25rem" gap=".5rem" wrap="wrap">
               {["Three.js", "WebGL", "GSAP", "GLSL"].map((tech) => (
                 <Badge
@@ -237,13 +232,10 @@ const ProjectsGrid = () => {
         target="_blank"
       >
         <Stack h="100%" justify="space-between">
-          <Title order={2}>Dev Quiz</Title>
-          <Image src={quiz} alt="Dev Quiz" />
+          <Title order={2}>{t("projects.devQuiz.title")}</Title>
+          <Image src={quiz} alt={t("projects.devQuiz.title")} />
           <Box>
-            <Text my="1rem">
-              A quiz application built with Vanilla TypeScript. Test your
-              knowledge on various development topics.
-            </Text>
+            <Text my="1rem">{t("projects.devQuiz.description")}</Text>
             <Flex maw="25rem" gap=".5rem" wrap="wrap">
               {["Vanilla Typescript", "Quiz Api"].map((tech) => (
                 <Badge
@@ -272,14 +264,10 @@ const ProjectsGrid = () => {
         target="_blank"
       >
         <Stack h="100%" justify="space-between">
-          <Title order={2}>Laura's Portfolio</Title>
+          <Title order={2}>{t("projects.laura.title")}</Title>
           <LauraIcon />
           <Box>
-            <Text my="1rem">
-              A personal portfolio i built for my girlfriend. Showcasing her
-              design projects. This website makes use of the Contentful CMS so
-              she can manage the content herself.
-            </Text>
+            <Text my="1rem">{t("projects.laura.description")}</Text>
             <Flex maw="25rem" gap=".5rem" wrap="wrap">
               {[
                 "React",

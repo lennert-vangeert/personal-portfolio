@@ -25,6 +25,7 @@ import {
 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import ProjectsGrid from "@common/projectsGrid";
+import { useTranslate } from "@global/localization";
 
 const audio = new Audio("/audio/lennert.mp3");
 const handlePlayAudio = () => {
@@ -37,13 +38,14 @@ const IndexPage = () => {
   const { mainMargin, isBigTablet, isMobile, isSmallMobile } = useSelector(
     (state: RootState) => state.ui
   );
+  const { t } = useTranslate();
   const theme = useMantineTheme();
   return (
     <>
       <Head
-        title="Portfolio"
-        description="This is the personal portfolio of Lennert Van Geert, a software developer based in Flanders, Belgium. Here you can find information about me, my tech stack, and how to contact me."
-        keyWords="Lennert Van Geert, Portfolio, homepage, information, techstack, contact me"
+        title={t("homepage.head.title")}
+        description={t("homepage.head.description")}
+        keyWords={t("homepage.head.keyWords")}
       />
       <Box mb="2rem" mt="2.5rem" mx={mainMargin}>
         <Flex
@@ -83,7 +85,7 @@ const IndexPage = () => {
                     : theme.headings.sizes.h1.fontSize
                 }
               >
-                Hi, I'm {isMobile && <br />}{" "}
+                {t("homepage.intro.greeting")} {isMobile && <br />}{" "}
                 <ExplodingText text="Lennert Van Geert" />
               </Title>
               <Group gap=".25rem">
@@ -94,14 +96,13 @@ const IndexPage = () => {
               </Group>
             </Box>
             <Text size={theme.headings.sizes.h4.fontSize} maw="50rem">
-              I'm a software developer with a passion for creating innovative
-              solutions based in Flanders, Belgium.
+              {t("homepage.intro.description")}
             </Text>
           </Stack>
         </Flex>
 
         <Title order={2} mt="2rem">
-          Contact me
+          {t("homepage.contact.title")}
         </Title>
         <Flex mt="1.5rem" gap="1rem" wrap="wrap">
           <Button
@@ -118,7 +119,7 @@ const IndexPage = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            LinkedIn
+            {t("homepage.contact.linkedin")}
           </Button>
           <Button
             variant="outline"
@@ -134,7 +135,7 @@ const IndexPage = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            GitHub
+            {t("homepage.contact.github")}
           </Button>
           <Button
             variant="outline"
@@ -150,12 +151,12 @@ const IndexPage = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Email
+            {t("homepage.contact.email")}
           </Button>
         </Flex>
 
         <Title order={2} mt="2rem">
-          My journey so far
+          {t("homepage.journey.title")}
         </Title>
         <Timeline mt="1.5rem" active={10} bulletSize={24} lineWidth={2}>
           {/* <Timeline.Item
@@ -177,65 +178,90 @@ const IndexPage = () => {
           </Timeline.Item> */}
           <Timeline.Item
             bullet={<IconBrandOffice color="white" />}
-            title="Full-Stack Developer"
+            title={t("homepage.journey.jobs.fullstack.title")}
           >
-            <Text component={Link} to="https://www.codifly.be" c="dimmed" size="sm">
-              Codifly
+            <Text
+              component={Link}
+              to="https://www.codifly.be"
+              c="dimmed"
+              size="sm"
+            >
+              {t("homepage.journey.jobs.fullstack.company")}
             </Text>
             <Text size="xs" mt={4}>
-              oct 2025 - present
+              {t("homepage.journey.jobs.fullstack.period")}
             </Text>
           </Timeline.Item>
           <Timeline.Item
             bullet={<IconBrandOffice color="white" />}
-            title="Web & Mobile Developer Student Job"
+            title={t("homepage.journey.jobs.studentJob.title")}
           >
-            <Text component={Link} to="https://www.codifly.be" c="dimmed" size="sm">
-              Codifly
+            <Text
+              component={Link}
+              to="https://www.codifly.be"
+              c="dimmed"
+              size="sm"
+            >
+              {t("homepage.journey.jobs.studentJob.company")}
             </Text>
             <Text size="xs" mt={4}>
-              jul 2025 - aug 2025
+              {t("homepage.journey.jobs.studentJob.period")}
             </Text>
           </Timeline.Item>
           <Timeline.Item
             bullet={<IconBrandOffice color="white" />}
-            title="Web & Mobile Developer Intern"
+            title={t("homepage.journey.jobs.intern.title")}
           >
-            <Text component={Link} to="https://www.codifly.be" c="dimmed" size="sm">
-              Codifly
+            <Text
+              component={Link}
+              to="https://www.codifly.be"
+              c="dimmed"
+              size="sm"
+            >
+              {t("homepage.journey.jobs.intern.company")}
             </Text>
             <Text size="xs" mt={4}>
-              feb 2025 - apr 2025
+              {t("homepage.journey.jobs.intern.period")}
             </Text>
           </Timeline.Item>
 
           <Timeline.Item
             bullet={<IconSchool color="white" />}
-            title="Bachelor Graphical and Digital Media: Multimedia production"
+            title={t("homepage.journey.education.bachelor.title")}
           >
-            <Text component={Link} to="https://www.arteveldehogeschool.be/en" c="dimmed" size="sm">
-              Artvelde University of Applied Sciences
+            <Text
+              component={Link}
+              to="https://www.arteveldehogeschool.be/en"
+              c="dimmed"
+              size="sm"
+            >
+              {t("homepage.journey.education.bachelor.school")}
             </Text>
             <Text size="xs" mt={4}>
-              2022 - 2025
+              {t("homepage.journey.education.bachelor.period")}
             </Text>
           </Timeline.Item>
 
           <Timeline.Item
             bullet={<IconSchool color="white" />}
-            title="Pre-university education - Business Economics"
+            title={t("homepage.journey.education.preuni.title")}
           >
-            <Text component={Link} to="https://www.sintjozefmere.be/" c="dimmed" size="sm">
-              Sint-Jozefschool Mere
+            <Text
+              component={Link}
+              to="https://www.sintjozefmere.be/"
+              c="dimmed"
+              size="sm"
+            >
+              {t("homepage.journey.education.preuni.school")}
             </Text>
             <Text size="xs" mt={4}>
-              2016 - 2022
+              {t("homepage.journey.education.preuni.period")}
             </Text>
           </Timeline.Item>
         </Timeline>
 
         <Title order={2} mt="2rem">
-          My Techstack
+          {t("homepage.techstack.title")}
         </Title>
         <Flex mt="1.5rem" maw={800} wrap="wrap" gap="1rem">
           {[
@@ -276,7 +302,7 @@ const IndexPage = () => {
           ))}
         </Flex>
         <Title order={2} mt="2rem">
-          My Projects
+          {t("homepage.projects.title")}
         </Title>
         <ProjectsGrid />
       </Box>

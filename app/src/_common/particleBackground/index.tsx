@@ -8,6 +8,10 @@ type ParticlesBackgroundProps = {
 
 const ParticlesBackground = ({ children }: ParticlesBackgroundProps) => {
   const [particlesReady, setParticlesReady] = useState(false);
+  const [prefersReducedMotion] = useState(
+    typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -22,10 +26,9 @@ const ParticlesBackground = ({ children }: ParticlesBackgroundProps) => {
           id="tsparticles"
           options={{
             background: { color: { value: "transparent" } },
-            fpsLimit: 80,
+            fpsLimit: 60,
             interactivity: {
               events: {
-                onClick: { enable: true, mode: "push" },
                 onHover: { enable: true, mode: "repulse" },
               },
               modes: {
@@ -36,19 +39,19 @@ const ParticlesBackground = ({ children }: ParticlesBackgroundProps) => {
             particles: {
               color: { value: "#ffffff" },
               links: {
-                color: "#ffffff",
-                distance: 150,
+                color: "#DD6031",
+                distance: 185,
                 enable: true,
-                opacity: 0.5,
+                opacity: 1,
                 width: 1,
               },
               collisions: { enable: true },
               move: {
-                direction: "none",
+                direction: "right",
                 enable: true,
-                outModes: { default: "bounce" },
+                outModes: { default: "split" },
                 random: false,
-                speed: 2,
+                speed: prefersReducedMotion ? 0.2 : 2,
                 straight: false,
               },
               number: {

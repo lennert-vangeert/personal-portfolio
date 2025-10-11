@@ -1,4 +1,5 @@
 import Head from "@global/head";
+import { useTranslate } from "@global/localization";
 import { RootState } from "@global/store/store";
 import {
   Alert,
@@ -44,6 +45,7 @@ const LOCAL_STORAGE_KEY = "chat-messages";
 
 const AIPage = () => {
   const { mainMargin, isMobile } = useSelector((state: RootState) => state.ui);
+  const { t } = useTranslate();
   const [inputMessage, setInputMessage] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>(() => {
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -88,11 +90,11 @@ const AIPage = () => {
           setChatReady(1);
         } else {
           setChatReady(2);
-          setError("Chat service is not available");
+          setError(t("aiPage.errors.serviceUnavailable"));
         }
       } catch {
         setChatReady(2);
-        setError("Chat service is not available");
+        setError(t("aiPage.errors.serviceUnavailable"));
       }
     };
 
@@ -288,9 +290,9 @@ const AIPage = () => {
   return (
     <>
       <Head
-        title="Ask me a question"
-        description="This is the chat page"
-        keyWords="chat, AI, assistant, LennertAI"
+        title={t("aiPage.head.title")}
+        description={t("aiPage.head.description")}
+        keyWords={t("aiPage.head.keyWords")}
       />
       {/* outer container takes full viewport and hides body scroll */}
       <Box
@@ -325,10 +327,9 @@ const AIPage = () => {
               {messages.length === 0 && (
                 <Center>
                   <Stack ta="center">
-                    <Title order={2}>Meet my AI Assistant</Title>
+                    <Title order={2}>{t("aiPage.welcome.title")}</Title>
                     <Text size={theme.headings.sizes.h4.fontSize}>
-                      You can ask this assistant anything about me or my
-                      portfolio.
+                      {t("aiPage.welcome.description")}
                     </Text>
                   </Stack>
                 </Center>
@@ -356,7 +357,7 @@ const AIPage = () => {
                     borderRadius: "8px",
                     padding: "0.5rem 1rem",
                     width: "fit-content",
-                    maxWidth: isMobile ? "85%" : "60%",
+                    maxWidth: isMobile ? "95%" : "60%",
                   }}
                   className={
                     message.sender === "user"
@@ -433,7 +434,7 @@ const AIPage = () => {
                 <Alert
                   variant="outline"
                   mx="auto"
-                  title="Error"
+                  title={t("aiPage.errors.alertTitle")}
                   color="red"
                   mb="1rem"
                   maw="20rem"
@@ -445,7 +446,7 @@ const AIPage = () => {
               )}
               <Textarea
                 bg="white"
-                placeholder="Your question..."
+                placeholder={t("aiPage.input.placeholder")}
                 autosize
                 minRows={1}
                 maxRows={5}
@@ -467,7 +468,7 @@ const AIPage = () => {
                 onKeyDown={handleKeyDown}
                 rightSection={inputIcon}
                 leftSection={
-                  <Tooltip label="Delete chat" withArrow>
+                  <Tooltip label={t("aiPage.input.deleteTooltip")} withArrow>
                     <IconTrash
                       stroke={2}
                       color="white"
@@ -480,8 +481,7 @@ const AIPage = () => {
                 value={inputMessage}
               />
               <Text mt=".5rem" ta="center" size="sm" c="dimmed">
-                This AI can make mistakes, please verify the information it
-                provides.
+                {t("aiPage.disclaimer")}
               </Text>
             </form>
           </Stack>

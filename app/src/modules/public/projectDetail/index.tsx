@@ -1,9 +1,14 @@
 import Head from "@global/head";
+import { useTranslate } from "@global/localization";
 
 const ProjectDetailPage = () => {
+  const { t } = useTranslate();
   return (
     <>
-      <Head title="Project Detail" description="Details about the project"  />
+      <Head
+        title={t("projectDetailPage.head.title")}
+        description={t("projectDetailPage.head.description")}
+      />
     </>
   );
 };

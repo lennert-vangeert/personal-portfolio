@@ -1,0 +1,134 @@
+{
+  "header": {
+    "nav": {
+      "home": "Home",
+      "projects": "Projecten",
+      "lennertai": "LennertAI"
+    }
+  },
+  "homepage": {
+    "head": {
+      "title": "Portfolio",
+      "description": "Dit is het persoonlijke portfolio van Lennert Van Geert, een softwareontwikkelaar gevestigd in Vlaanderen, België. Hier vind je informatie over mij, mijn tech stack en hoe je mij kunt contacteren.",
+      "keyWords": "Lennert Van Geert, Portfolio, homepage, informatie, techstack, contacteer mij"
+    },
+    "intro": {
+      "greeting": "Hallo, ik ben",
+      "description": "Ik ben een softwareontwikkelaar met een passie voor het creëren van innovatieve oplossingen, gevestigd in Vlaanderen, België."
+    },
+    "contact": {
+      "title": "Contacteer mij",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "email": "E-mail"
+    },
+    "journey": {
+      "title": "Mijn reis tot nu toe",
+      "jobs": {
+        "fullstack": {
+          "title": "Full-Stack Developer",
+          "company": "Codifly",
+          "period": "okt 2025 - heden"
+        },
+        "studentJob": {
+          "title": "Web & Mobile Developer Studentenjob",
+          "company": "Codifly",
+          "period": "jul 2025 - aug 2025"
+        },
+        "intern": {
+          "title": "Web & Mobile Developer Stagiair",
+          "company": "Codifly",
+          "period": "feb 2025 - apr 2025"
+        }
+      },
+      "education": {
+        "bachelor": {
+          "title": "Bachelor Grafische en Digitale Media: Multimediaproductie",
+          "school": "Arteveldehogeschool",
+          "period": "2022 - 2025"
+        },
+        "preuni": {
+          "title": "Secundair onderwijs - Economie",
+          "school": "Sint-Jozefschool Mere",
+          "period": "2016 - 2022"
+        }
+      }
+    },
+    "techstack": {
+      "title": "Mijn Techstack"
+    },
+    "projects": {
+      "title": "Mijn Projecten"
+    }
+  },
+  "projectsPage": {
+    "head": {
+      "title": "Projecten",
+      "description": "Ontdek mijn projecten",
+      "keyWords": "Lennert Van Geert, Portfolio, projecten, webontwikkeling, node"
+    },
+    "title": "Mijn Projecten"
+  },
+  "projects": {
+    "sam": {
+      "title": "De Sam Website",
+      "description": "Een informatieve website die leerlingen en hun ouders helpt bij de overstap naar het secundair onderwijs in België. Een project voor het CLB (Centrum voor Leerlingenbegeleiding) van West-Vlaanderen."
+    },
+    "molQuiz": {
+      "title": "De Mol Quiz",
+      "description": "Een webapp en api waar vrienden en familie hun kennis van het populaire Belgische tv-programma \"De Mol\" konden testen na elke wekelijkse aflevering."
+    },
+    "defcon": {
+      "title": "Defcon IoT Escape Room",
+      "description": "Een IoT escape room waar spelers puzzels oplossen om de wereld te redden van de Sovjet-Unie tijdens de Koude Oorlog. Het spel wordt gespeeld in een echte kamer met fysieke apparaten en een webinterface."
+    },
+    "whiskerWings": {
+      "title": "Whisker Wings",
+      "description": "Een 3D browsergame waar je een vliegtuig bestuurt met een konijn als piloot. Het doel is om alle ringen zo snel mogelijk te verzamelen. Zonder te crashen natuurlijk."
+    },
+    "isometricRoom": {
+      "title": "Isometrische Kasteelkamer",
+      "description": "Een isometrische 3D-kamer gebouwd met Three.js. Verken de kamer, interageer met interessante punten en ontdek het kleine verhaal."
+    },
+    "devQuiz": {
+      "title": "Dev Quiz",
+      "description": "Een quiz-applicatie gebouwd met Vanilla TypeScript. Test je kennis over verschillende ontwikkelingsonderwerpen."
+    },
+    "laura": {
+      "title": "Laura's Portfolio",
+      "description": "Een persoonlijk portfolio dat ik heb gebouwd voor mijn vriendin. Het toont haar ontwerpprojecten. Deze website maakt gebruik van het Contentful CMS zodat zij de inhoud zelf kan beheren."
+    }
+  },
+  "aiPage": {
+    "head": {
+      "title": "Stel me een vraag",
+      "description": "Dit is de chat pagina",
+      "keyWords": "chat, AI, assistent, LennertAI"
+    },
+    "welcome": {
+      "title": "Ontmoet mijn AI Assistent",
+      "description": "Je kunt deze assistent alles vragen over mij of mijn portfolio."
+    },
+    "input": {
+      "placeholder": "Jouw vraag...",
+      "deleteTooltip": "Verwijder chat"
+    },
+    "disclaimer": "Deze AI kan fouten maken, controleer de informatie die het verstrekt.",
+    "errors": {
+      "serviceUnavailable": "Chat service is niet beschikbaar",
+      "alertTitle": "Fout"
+    }
+  },
+  "contactPage": {
+    "head": {
+      "title": "Neem contact op",
+      "description": "Praat met mij"
+    }
+  },
+  "projectDetailPage": {
+    "head": {
+      "title": "Project Detail",
+      "description": "Details over het project"
+    }
+  }
+}
