@@ -168,7 +168,7 @@ const PillNav: React.FC<PillNavProps> = ({
     if (!tl) return;
     activeTweenRefs.current[i]?.kill();
     activeTweenRefs.current[i] = tl.tweenTo(tl.duration(), {
-      duration: 0.3,
+      duration: 0.6,
       ease,
       overwrite: "auto",
     });
@@ -367,9 +367,6 @@ const PillNav: React.FC<PillNavProps> = ({
             </li>
           ))}
         </ul>
-        <div className="mobile-language-toggle">
-          <LanguageToggle ease={ease} />
-        </div>
       </div>
     </div>
   );

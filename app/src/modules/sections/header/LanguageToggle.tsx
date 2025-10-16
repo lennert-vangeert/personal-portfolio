@@ -44,11 +44,12 @@ const LanguageToggle: React.FC<LanguageToggleProps> = ({
     flagTweenRef.current?.kill();
     gsap.set(container, { rotate: 0 });
     flagTweenRef.current = gsap.to(container, {
-      rotate: 360,
+      rotate: 20,
       duration: 0.2,
       ease,
       overwrite: "auto",
     });
+    flagTweenRef.current.yoyo(true).repeat(1);
   };
 
   return (

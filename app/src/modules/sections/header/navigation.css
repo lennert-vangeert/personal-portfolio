@@ -201,6 +201,7 @@
   opacity: 0;
   transform-origin: top center;
   visibility: hidden;
+  padding-bottom: 1rem;
 }
 
 .mobile-menu-list {
