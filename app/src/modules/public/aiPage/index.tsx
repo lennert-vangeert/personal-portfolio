@@ -249,13 +249,23 @@ const AIPage = () => {
           bg={theme.colors.default[5]}
           p=".25rem"
           style={{ borderRadius: "50%" }}
+          role="button"
+          aria-label={t("aiPage.input.sendAriaLabel")}
+          tabIndex={0}
+          onClick={handleSend}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
         >
           <IconArrowUp
             stroke={2}
             color="white"
-            onClick={handleSend}
             size={32}
             style={{ cursor: "pointer" }}
+            aria-hidden="true"
           />
         </Center>
       );
@@ -265,6 +275,7 @@ const AIPage = () => {
           bg={theme.colors.default[5]}
           p=".25rem"
           style={{ borderRadius: "50%" }}
+          aria-label={t("aiPage.input.loadingAriaLabel")}
         >
           <Loader color="#fff" />
         </Center>
@@ -275,12 +286,18 @@ const AIPage = () => {
           bg={theme.colors.default[5]}
           p=".25rem"
           style={{ borderRadius: "50%", cursor: "not-allowed" }}
+          aria-label={t("aiPage.input.unavailableAriaLabel")}
         >
-          <IconExclamationCircle stroke={2} color="white" size={32} />
+          <IconExclamationCircle
+            stroke={2}
+            color="white"
+            size={32}
+            aria-hidden="true"
+          />
         </Center>
       );
     }
-  }, [chatReady, inputMessage]);
+  }, [chatReady, inputMessage, handleSend, theme, t]);
 
   const messagesJustify = useMemo(
     () => (messages.length === 0 ? "space-between" : "flex-end"),
@@ -316,6 +333,9 @@ const AIPage = () => {
           {/* scrollable messages area - only this div will scroll */}
           <Box
             ref={messagesRef}
+            role="log"
+            aria-live="polite"
+            aria-label={t("aiPage.messages.ariaLabel")}
             style={{
               flex: 1,
               overflowY: "auto",
@@ -364,6 +384,12 @@ const AIPage = () => {
                       ? style.rightMessage
                       : style.leftMessage
                   }
+                  role="article"
+                  aria-label={`${
+                    message.sender === "user"
+                      ? t("aiPage.messages.userMessage")
+                      : t("aiPage.messages.botMessage")
+                  }, ${new Date(message.timestamp).toLocaleTimeString()}`}
                 >
                   {message.sender === "bot" && message.type !== "error" ? (
                     <div className={style.markdownContent}>
@@ -399,6 +425,9 @@ const AIPage = () => {
                     padding: "0.5rem 1rem",
                     width: "fit-content",
                   }}
+                  role="status"
+                  aria-live="polite"
+                  aria-label={t("aiPage.messages.loading")}
                 >
                   <Stack>
                     <Skeleton height=".5rem" w="8rem" />
@@ -475,12 +504,23 @@ const AIPage = () => {
                       onClick={handleDeleteChat}
                       size={32}
                       style={{ cursor: "pointer" }}
+                      aria-label={t("aiPage.input.deleteAriaLabel")}
+                      role="button"
+                      tabIndex={0}
                     />
                   </Tooltip>
                 }
                 value={inputMessage}
+                aria-label={t("aiPage.input.ariaLabel")}
+                aria-describedby="chat-disclaimer"
               />
-              <Text mt=".5rem" ta="center" size="sm" c="dimmed">
+              <Text
+                mt=".5rem"
+                ta="center"
+                size="sm"
+                c="dimmed"
+                id="chat-disclaimer"
+              >
                 {t("aiPage.disclaimer")}
               </Text>
             </form>

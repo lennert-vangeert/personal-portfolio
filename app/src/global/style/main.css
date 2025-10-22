@@ -3,6 +3,28 @@ a {
   text-decoration: none;
 }
 
+/* Accessibility - Focus Indicators */
+*:focus-visible {
+  outline: 3px solid #dd6031;
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #dd6031;
+  outline-offset: 2px;
+}
+
+/* Remove default focus outline for mouse users */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* Variables */
 :root {
   --sb-track-color: #b9c2cc;

@@ -35,6 +35,9 @@ const ProjectsGrid = () => {
         className={`${style.item} ${style.item1}`}
         rel="noopener noreferrer"
         target="_blank"
+        aria-label={`${t("projects.sam.title")} - ${t(
+          "projects.sam.description"
+        )} (opens in new tab)`}
       >
         <Stack h="100%" justify="space-between">
           <Title order={2}>{t("projects.sam.title")}</Title>
@@ -65,6 +68,9 @@ const ProjectsGrid = () => {
         to="#"
         p="1rem"
         className={`${style.item} ${style.item2}`}
+        aria-label={`${t("projects.molQuiz.title")} - ${t(
+          "projects.molQuiz.description"
+        )}`}
       >
         <Stack h="100%" justify="space-between">
           <Title order={2}>{t("projects.molQuiz.title")}</Title>
@@ -111,6 +117,9 @@ const ProjectsGrid = () => {
         className={`${style.item} ${style.item3}`}
         rel="noopener noreferrer"
         target="_blank"
+        aria-label={`${t("projects.defcon.title")} - ${t(
+          "projects.defcon.description"
+        )} (opens in new tab)`}
       >
         <Stack h="100%" justify="space-between">
           <Title order={2}>{t("projects.defcon.title")}</Title>
@@ -151,6 +160,9 @@ const ProjectsGrid = () => {
         className={`${style.item} ${style.item4}`}
         rel="noopener noreferrer"
         target="_blank"
+        aria-label={`${t("projects.whiskerWings.title")} - ${t(
+          "projects.whiskerWings.description"
+        )} (opens in new tab)`}
       >
         <Stack h="100%" justify="space-between">
           <Title order={2}>{t("projects.whiskerWings.title")}</Title>
@@ -198,6 +210,9 @@ const ProjectsGrid = () => {
         className={`${style.item} ${style.item5}`}
         rel="noopener noreferrer"
         target="_blank"
+        aria-label={`${t("projects.isometricRoom.title")} - ${t(
+          "projects.isometricRoom.description"
+        )} (opens in new tab)`}
       >
         <Stack h="100%" justify="space-between">
           <Title order={2}>{t("projects.isometricRoom.title")}</Title>
@@ -230,6 +245,9 @@ const ProjectsGrid = () => {
         className={`${style.item} ${style.item6}`}
         rel="noopener noreferrer"
         target="_blank"
+        aria-label={`${t("projects.devQuiz.title")} - ${t(
+          "projects.devQuiz.description"
+        )} (opens in new tab)`}
       >
         <Stack h="100%" justify="space-between">
           <Title order={2}>{t("projects.devQuiz.title")}</Title>
@@ -262,10 +280,13 @@ const ProjectsGrid = () => {
         className={`${style.item} ${style.item7}`}
         rel="noopener noreferrer"
         target="_blank"
+        aria-label={`${t("projects.laura.title")} - ${t(
+          "projects.laura.description"
+        )} (opens in new tab)`}
       >
         <Stack h="100%" justify="space-between">
           <Title order={2}>{t("projects.laura.title")}</Title>
-          <LauraIcon />
+          <LauraIcon aria-hidden="true" />
           <Box>
             <Text my="1rem">{t("projects.laura.description")}</Text>
             <Flex maw="25rem" gap=".5rem" wrap="wrap">

@@ -15,6 +15,13 @@
   flex-shrink: 0;
 }
 
+/* Focus styles for language toggle */
+.language-toggle:focus-visible {
+  outline: 3px solid #dd6031;
+  outline-offset: 3px;
+  transform: scale(1.05);
+}
+
 .language-toggle:hover {
   transform: scale(1.05);
 }

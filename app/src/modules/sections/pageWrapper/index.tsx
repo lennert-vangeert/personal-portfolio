@@ -4,6 +4,8 @@ import { ReactNode, useEffect, useMemo, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import Header, { headerHeight } from "../header";
+import { useTranslate } from "@global/localization";
+import style from "./pageWrapper.module.css";
 
 // Redux
 import ScrollToTop from "@common/scrollToTop";
@@ -44,6 +46,7 @@ const PageWrapper = ({ children }: PageWrapperProps) => {
   const theme = useMantineTheme();
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslate();
 
   const previousPathRef = useRef<string | undefined>(undefined);
 
@@ -93,9 +96,14 @@ const PageWrapper = ({ children }: PageWrapperProps) => {
   return (
     <>
       <ScrollToTop />
+      <a href="#main-content" className={style.skipLink}>
+        {t("accessibility.skipToMain")}
+      </a>
       <AppShell>
         <Header />
         <Box
+          component="main"
+          id="main-content"
           style={{
             paddingTop: headerHeight,
           }}

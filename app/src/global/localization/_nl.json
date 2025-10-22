@@ -1,4 +1,7 @@
 {
+  "accessibility": {
+    "skipToMain": "Spring naar hoofdinhoud"
+  },
   "header": {
     "nav": {
       "home": "Home",
@@ -111,7 +114,18 @@
     },
     "input": {
       "placeholder": "Jouw vraag...",
-      "deleteTooltip": "Verwijder chat"
+      "deleteTooltip": "Verwijder chat",
+      "deleteAriaLabel": "Verwijder chatgeschiedenis",
+      "sendAriaLabel": "Verstuur bericht",
+      "loadingAriaLabel": "Chat is aan het laden",
+      "unavailableAriaLabel": "Chat is niet beschikbaar",
+      "ariaLabel": "Typ hier je bericht"
+    },
+    "messages": {
+      "ariaLabel": "Chatberichten",
+      "userMessage": "Jouw bericht",
+      "botMessage": "AI antwoord",
+      "loading": "AI is een antwoord aan het typen"
     },
     "disclaimer": "Deze AI kan fouten maken, controleer de informatie die het verstrekt.",
     "errors": {

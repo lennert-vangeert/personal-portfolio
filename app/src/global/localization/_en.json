@@ -1,4 +1,7 @@
 {
+  "accessibility": {
+    "skipToMain": "Skip to main content"
+  },
   "header": {
     "nav": {
       "home": "Home",
@@ -111,7 +114,18 @@
     },
     "input": {
       "placeholder": "Your question...",
-      "deleteTooltip": "Delete chat"
+      "deleteTooltip": "Delete chat",
+      "deleteAriaLabel": "Delete chat history",
+      "sendAriaLabel": "Send message",
+      "loadingAriaLabel": "Chat is loading",
+      "unavailableAriaLabel": "Chat is unavailable",
+      "ariaLabel": "Type your message here"
+    },
+    "messages": {
+      "ariaLabel": "Chat messages",
+      "userMessage": "Your message",
+      "botMessage": "AI response",
+      "loading": "AI is typing a response"
     },
     "disclaimer": "This AI can make mistakes, please verify the information it provides.",
     "errors": {

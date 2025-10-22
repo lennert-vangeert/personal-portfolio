@@ -90,6 +90,13 @@
   overflow: hidden;
 }
 
+/* Focus styles for navigation pills */
+.pill:focus-visible {
+  outline: 3px solid #dd6031;
+  outline-offset: 3px;
+  z-index: 10;
+}
+
 .pill .hover-circle {
   position: absolute;
   left: 50%;
@@ -174,6 +181,12 @@
   position: relative;
 }
 
+/* Focus styles for mobile menu button */
+.mobile-menu-button:focus-visible {
+  outline: 3px solid #dd6031;
+  outline-offset: 3px;
+}
+
 @media (max-width: 768px) {
   .mobile-menu-button {
     display: flex;
@@ -223,6 +236,12 @@
   font-weight: 500;
   border-radius: 50px;
   transition: all 0.2s ease;
+}
+
+/* Focus styles for mobile menu links */
+.mobile-menu-popover .mobile-menu-link:focus-visible {
+  outline: 3px solid #dd6031;
+  outline-offset: 2px;
 }
 
 .mobile-menu-popover .mobile-menu-link:hover {
