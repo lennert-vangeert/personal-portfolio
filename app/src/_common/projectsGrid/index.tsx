@@ -313,8 +313,8 @@ const ProjectsGrid = () => {
             </Flex>
           </Box>
         </Stack>
-      </Box>
-    </Box> */}
+      </Box> */}
+    </Box>
   );
 };
 
