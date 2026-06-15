@@ -16,7 +16,7 @@ import deMol from "/images/deMol.png";
 import sam from "/images/sam.png";
 import plane from "/images/plane.png";
 import quiz from "/images/quiz.png";
-import LauraIcon from "./lauraIcon.svg?react";
+// import LauraIcon from "./lauraIcon.svg?react";
 import { useSelector } from "react-redux";
 import { RootState } from "@global/store/store";
 import { useTranslate } from "@global/localization";
