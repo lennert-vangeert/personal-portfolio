@@ -272,7 +272,7 @@ const ProjectsGrid = () => {
           </Box>
         </Stack>
       </Box>
-      <Box
+      {/* <Box
         // bg="white"
         component={Link}
         to="https://lauravolkaert.be/"
@@ -314,7 +314,7 @@ const ProjectsGrid = () => {
           </Box>
         </Stack>
       </Box>
-    </Box>
+    </Box> */}
   );
 };
 
