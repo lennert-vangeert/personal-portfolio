@@ -1,20 +1,9 @@
 import Head from "@global/head";
 import { useTranslate } from "@global/localization";
 import { RootState } from "@global/store/store";
-import {
-  Alert,
-  Box,
-  Center,
-  Loader,
-  Skeleton,
-  Stack,
-  Text,
-  Textarea,
-  Title,
-  Tooltip,
-  useMantineTheme,
-} from "@mantine/core";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Textarea } from "@mantine/core";
+import NeonTitle from "@common/neonText";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   IconArrowUp,
@@ -42,9 +31,10 @@ type AIResponse = {
 };
 
 const LOCAL_STORAGE_KEY = "chat-messages";
+const SUGGESTION_KEYS = ["stack", "projects", "experience", "contact"] as const;
 
 const AIPage = () => {
-  const { mainMargin, isMobile } = useSelector((state: RootState) => state.ui);
+  const { mainMargin } = useSelector((state: RootState) => state.ui);
   const { t } = useTranslate();
   const [inputMessage, setInputMessage] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>(() => {
@@ -60,27 +50,14 @@ const AIPage = () => {
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [__, setHistoryIndex] = useState<number | null>(null);
-  const [chatReady, setChatReady] = useState<number>(0); // 0 = not ready, 1 = ready, 2 = error
+  const [, setHistoryIndex] = useState<number | null>(null);
+  const [chatReady, setChatReady] = useState<number>(0); // 0 = connecting, 1 = online, 2 = offline
 
-  const theme = useMantineTheme();
   const sanitizeURL = useSanitizeURL();
+  const logRef = useRef<HTMLDivElement | null>(null);
 
-  // ref for the scrollable messages container
-  const messagesRef = useRef<HTMLDivElement | null>(null);
-
-  // ref for the fixed form so we can measure its height and add sufficient bottom padding
-  const formRef = useRef<HTMLFormElement | null>(null);
-  const [bottomPaddingPx, setBottomPaddingPx] = useState<number>(160); // fallback
-
+  // health check on mount
   useEffect(() => {
-    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (stored) {
-      try {
-        const parsed: Message[] = JSON.parse(stored);
-        setMessages(parsed);
-      } catch {}
-    }
     const fetchCheck = async () => {
       try {
         const response: { status: string } = await fetch(
@@ -97,88 +74,59 @@ const AIPage = () => {
         setError(t("aiPage.errors.serviceUnavailable"));
       }
     };
-
     fetchCheck();
   }, []);
 
+  // persist conversation
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(messages));
   }, [messages]);
 
-  // measure the fixed form height and set padding for the messages container
+  // auto-scroll the log to the bottom on new content
   useEffect(() => {
-    const measure = () => {
-      if (formRef.current) {
-        const rect = formRef.current.getBoundingClientRect();
-        // add a little extra spacing so messages don't butt up exactly to the form
-        setBottomPaddingPx(Math.ceil(rect.height + 24));
-      } else {
-        // fallback (keeps previous if available)
-        setBottomPaddingPx((prev) => prev || 160);
-      }
-    };
-
-    // measure initially and on resize (responsive)
-    measure();
-    window.addEventListener("resize", measure);
-    return () => {
-      window.removeEventListener("resize", measure);
-    };
-  }, [isMobile, mainMargin]);
-
-  // auto-scroll to bottom whenever messages change or bottom padding changes
-  useEffect(() => {
-    if (messagesRef.current) {
-      // ensure layout is stable before scrolling (small delay)
-      // using requestAnimationFrame is usually enough
+    if (logRef.current) {
       requestAnimationFrame(() => {
-        messagesRef.current!.scrollTop = messagesRef.current!.scrollHeight;
+        logRef.current!.scrollTop = logRef.current!.scrollHeight;
       });
     }
-  }, [messages, loading, bottomPaddingPx]);
+  }, [messages, loading]);
 
   const handleDeleteChat = useCallback(() => {
     setMessages([]);
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   }, []);
 
-  const handleSend = useCallback(async () => {
-    setLoading(true);
-    if (inputMessage.trim()) {
-      const nowId = Date.now().toString();
-      const newMessage: Message = {
-        id: nowId,
-        content: inputMessage,
-        sender: "user",
-        timestamp: new Date(),
-      };
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+  const sendMessage = useCallback(
+    async (text: string) => {
+      const trimmed = text.trim();
+      if (!trimmed || loading || chatReady !== 1) return;
+
+      setLoading(true);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now().toString(),
+          content: trimmed,
+          sender: "user",
+          timestamp: new Date(),
+        },
+      ]);
       setInputMessage("");
       setHistoryIndex(null);
 
-      // demo bot reply. keep this behaviour while testing.
-      // setMessages((prevMessages) => [
-      //   ...prevMessages,
-      //   {
-      //     id: (Date.now() + 1).toString(),
-      //     content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
-      //     sender: "bot",
-      //     timestamp: new Date(),
-      //   },
-      // ]);
       const response: AIResponse = await fetch(
         `${import.meta.env.VITE_API_ORIGIN}/chat`,
         "POST",
         undefined,
-        JSON.stringify({ message: inputMessage })
+        JSON.stringify({ message: trimmed })
       );
 
       if (response.error) {
         setError(response.error);
-        setMessages((prevMessages) => [
-          ...prevMessages,
+        setMessages((prev) => [
+          ...prev,
           {
-            id: Date.now().toString(),
+            id: (Date.now() + 1).toString(),
             content: String(response.error),
             sender: "bot",
             type: "error",
@@ -187,10 +135,10 @@ const AIPage = () => {
         ]);
       } else {
         setError(null);
-        setMessages((prevMessages) => [
-          ...prevMessages,
+        setMessages((prev) => [
+          ...prev,
           {
-            id: Date.now().toString(),
+            id: (Date.now() + 1).toString(),
             content: response.answer,
             sender: "bot",
             type: "normal",
@@ -199,10 +147,9 @@ const AIPage = () => {
         ]);
       }
       setLoading(false);
-    } else {
-      setLoading(false);
-    }
-  }, [inputMessage]);
+    },
+    [loading, chatReady]
+  );
 
   const userMessages = messages.filter((m) => m.sender === "user");
 
@@ -210,7 +157,6 @@ const AIPage = () => {
     if (e.key === "ArrowUp") {
       e.preventDefault();
       if (userMessages.length === 0) return;
-
       setHistoryIndex((prev) => {
         const newIndex =
           prev === null ? userMessages.length - 1 : Math.max(prev - 1, 0);
@@ -218,91 +164,29 @@ const AIPage = () => {
         return newIndex;
       });
     }
-
     if (e.key === "ArrowDown") {
       e.preventDefault();
       if (userMessages.length === 0) return;
-
       setHistoryIndex((prev) => {
         if (prev === null) return null;
         const newIndex = prev + 1;
-
         if (newIndex >= userMessages.length) {
           setInputMessage("");
           return null;
-        } else {
-          setInputMessage(userMessages[newIndex].content);
-          return newIndex;
         }
+        setInputMessage(userMessages[newIndex].content);
+        return newIndex;
       });
     }
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      handleSend();
+      sendMessage(inputMessage);
     }
   };
 
-  const inputIcon = useMemo(() => {
-    if (inputMessage.length > 0) {
-      return (
-        <Center
-          bg={theme.colors.default[5]}
-          p=".25rem"
-          style={{ borderRadius: "50%" }}
-          role="button"
-          aria-label={t("aiPage.input.sendAriaLabel")}
-          tabIndex={0}
-          onClick={handleSend}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              handleSend();
-            }
-          }}
-        >
-          <IconArrowUp
-            stroke={2}
-            color="white"
-            size={32}
-            style={{ cursor: "pointer" }}
-            aria-hidden="true"
-          />
-        </Center>
-      );
-    } else if (chatReady === 0) {
-      return (
-        <Center
-          bg={theme.colors.default[5]}
-          p=".25rem"
-          style={{ borderRadius: "50%" }}
-          aria-label={t("aiPage.input.loadingAriaLabel")}
-        >
-          <Loader color="#fff" />
-        </Center>
-      );
-    } else if (chatReady === 2) {
-      return (
-        <Center
-          bg={theme.colors.default[5]}
-          p=".25rem"
-          style={{ borderRadius: "50%", cursor: "not-allowed" }}
-          aria-label={t("aiPage.input.unavailableAriaLabel")}
-        >
-          <IconExclamationCircle
-            stroke={2}
-            color="white"
-            size={32}
-            aria-hidden="true"
-          />
-        </Center>
-      );
-    }
-  }, [chatReady, inputMessage, handleSend, theme, t]);
-
-  const messagesJustify = useMemo(
-    () => (messages.length === 0 ? "space-between" : "flex-end"),
-    [messages.length]
-  );
+  const statusKey =
+    chatReady === 1 ? "online" : chatReady === 2 ? "offline" : "connecting";
+  const composerDisabled = loading || chatReady !== 1;
 
   return (
     <>
@@ -311,79 +195,88 @@ const AIPage = () => {
         description={t("aiPage.head.description")}
         keyWords={t("aiPage.head.keyWords")}
       />
-      {/* outer container takes full viewport and hides body scroll */}
-      <Box
-        className={style.outerContainer}
-        style={{
-          height: "70vh",
-          overflow: "hidden",
-          paddingLeft: mainMargin,
-          paddingRight: mainMargin,
-        }}
+      <div
+        className={style.page}
+        style={{ paddingLeft: mainMargin, paddingRight: mainMargin }}
       >
-        {/* main vertical stack that fills the container */}
-        <Stack
-          style={{
-            height: "100%", // changed from 100vh to 100% so it fits within the outer container
-            paddingTop: "5rem",
-            paddingBottom: 0,
-            display: "flex",
-          }}
-        >
-          {/* scrollable messages area - only this div will scroll */}
-          <Box
-            ref={messagesRef}
+        <section className={style.window}>
+          {/* ---- title bar ---- */}
+          <header className={style.titlebar}>
+            <div className={style.titleLeft}>
+              <span className={style.windowDots} aria-hidden="true">
+                <span className={style.dotMagenta} />
+                <span className={style.dotYellow} />
+                <span className={style.dotLime} />
+              </span>
+              <span className={style.titleName}>LENNERT.AI</span>
+            </div>
+            <div className={style.titleRight}>
+              <span className={style.status} data-state={chatReady}>
+                <span className={style.led} aria-hidden="true" />
+                {t(`aiPage.status.${statusKey}`)}
+              </span>
+              <button
+                type="button"
+                className={style.clearBtn}
+                onClick={handleDeleteChat}
+                disabled={messages.length === 0}
+                aria-label={t("aiPage.input.deleteAriaLabel")}
+                title={t("aiPage.input.deleteTooltip")}
+              >
+                <IconTrash size={16} aria-hidden="true" />
+              </button>
+            </div>
+          </header>
+
+          {/* ---- conversation log ---- */}
+          <div
+            ref={logRef}
+            className={style.log}
             role="log"
             aria-live="polite"
             aria-label={t("aiPage.messages.ariaLabel")}
-            style={{
-              flex: 1,
-              overflowY: "auto",
-              WebkitOverflowScrolling: "touch",
-              paddingBottom: `${bottomPaddingPx}px`,
-            }}
           >
-            <Stack justify={messagesJustify} mx=".75rem">
-              {messages.length === 0 && (
-                <Center>
-                  <Stack ta="center">
-                    <Title order={2}>{t("aiPage.welcome.title")}</Title>
-                    <Text size={theme.headings.sizes.h4.fontSize}>
-                      {t("aiPage.welcome.description")}
-                    </Text>
-                  </Stack>
-                </Center>
-              )}
-              {messages.map((message) => (
-                <Box
+            {messages.length === 0 ? (
+              <div className={style.empty}>
+                <span className={style.boot}>
+                  LENNERT.AI // READY{" "}
+                  <span className={style.caret}>_</span>
+                </span>
+                <NeonTitle order={2} neon="cyan">
+                  {t("aiPage.welcome.title")}
+                </NeonTitle>
+                <p className={style.bootText}>{t("aiPage.welcome.description")}</p>
+                <div className={style.suggestions}>
+                  <span className={style.suggestLabel}>
+                    {t("aiPage.suggestions.title")}
+                  </span>
+                  {SUGGESTION_KEYS.map((key) => {
+                    const question = t(`aiPage.suggestions.${key}`);
+                    return (
+                      <button
+                        key={key}
+                        type="button"
+                        className={style.chip}
+                        onClick={() => sendMessage(question)}
+                        disabled={chatReady !== 1}
+                      >
+                        {question}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              messages.map((message) => (
+                <div
                   key={message.id}
-                  bg={
+                  className={`${style.line} ${
                     message.type === "error"
-                      ? "#ea2112ff" // red for error
+                      ? style.errorLine
                       : message.sender === "user"
-                      ? theme.colors.default[5]
-                      : "lightgray"
-                  }
-                  c={
-                    message.type === "error"
-                      ? "#fff"
-                      : message.sender === "user"
-                      ? "#fff"
-                      : "#000"
-                  }
-                  style={{
-                    alignSelf:
-                      message.sender === "user" ? "flex-end" : "flex-start",
-                    borderRadius: "8px",
-                    padding: "0.5rem 1rem",
-                    width: "fit-content",
-                    maxWidth: isMobile ? "95%" : "60%",
-                  }}
-                  className={
-                    message.sender === "user"
-                      ? style.rightMessage
-                      : style.leftMessage
-                  }
+                      ? style.userLine
+                      : style.botLine
+                  }`}
                   role="article"
                   aria-label={`${
                     message.sender === "user"
@@ -391,6 +284,9 @@ const AIPage = () => {
                       : t("aiPage.messages.botMessage")
                   }, ${new Date(message.timestamp).toLocaleTimeString()}`}
                 >
+                  <span className={style.prefix}>
+                    {message.sender === "user" ? "visitor>" : "LENNERT.AI>"}
+                  </span>
                   {message.sender === "bot" && message.type !== "error" ? (
                     <div className={style.markdownContent}>
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -398,135 +294,93 @@ const AIPage = () => {
                       </ReactMarkdown>
                     </div>
                   ) : (
-                    sanitizeURL(message.content)
+                    <span className={style.msgText}>
+                      {sanitizeURL(message.content)}
+                    </span>
                   )}
-                  <Text
-                    size="xs"
-                    c={
-                      message.type === "error"
-                        ? "#fff"
-                        : message.sender === "user"
-                        ? "#fff"
-                        : "dimmed"
-                    }
-                    ta={message.sender === "user" ? "left" : "right"}
-                  >
+                  <span className={style.timestamp}>
                     {new Date(message.timestamp).toLocaleTimeString()}
-                  </Text>
-                </Box>
-              ))}
+                  </span>
+                </div>
+              ))
+            )}
 
-              {loading && (
-                <Box
-                  bg="gray"
-                  style={{
-                    alignSelf: "flex-start",
-                    borderRadius: "8px",
-                    padding: "0.5rem 1rem",
-                    width: "fit-content",
-                  }}
-                  role="status"
-                  aria-live="polite"
-                  aria-label={t("aiPage.messages.loading")}
-                >
-                  <Stack>
-                    <Skeleton height=".5rem" w="8rem" />
-                    <Skeleton height=".5rem" w="6rem" />
-                    <Skeleton height=".5rem" w="7rem" />
-                  </Stack>
-                </Box>
-              )}
-            </Stack>
-          </Box>
+            {loading && (
+              <div
+                className={`${style.line} ${style.botLine} ${style.typing}`}
+                role="status"
+                aria-live="polite"
+                aria-label={t("aiPage.messages.loading")}
+              >
+                <span className={style.prefix}>LENNERT.AI&gt;</span>
+                <span className={style.dots} aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                </span>
+              </div>
+            )}
+          </div>
 
-          {/* fixed form stays above the scrollable area */}
-          <Stack align="center">
-            <form
-              ref={formRef}
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSend();
-              }}
-              style={{
-                position: "fixed",
-                bottom: "2.5rem",
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "100%",
-                maxWidth: "600px",
-                paddingLeft: isMobile ? mainMargin : 0,
-                paddingRight: isMobile ? mainMargin : 0,
-                zIndex: 999, // ensure overlay is on top
-              }}
-            >
-              {error && (
-                <Alert
-                  variant="outline"
-                  mx="auto"
-                  title={t("aiPage.errors.alertTitle")}
-                  color="red"
-                  mb="1rem"
-                  maw="20rem"
-                  icon={<IconExclamationCircle size={16} />}
-                  bg={theme.white}
-                >
-                  {error}
-                </Alert>
-              )}
+          {/* ---- composer ---- */}
+          <form
+            className={style.composer}
+            onSubmit={(e) => {
+              e.preventDefault();
+              sendMessage(inputMessage);
+            }}
+          >
+            <div className={style.composerRow}>
               <Textarea
-                bg="white"
+                className={style.input}
                 placeholder={t("aiPage.input.placeholder")}
                 autosize
                 minRows={1}
                 maxRows={5}
-                styles={{
-                  input: {
-                    borderRadius: "50px",
-                    paddingRight: "4rem",
-                  },
-                }}
-                size="xl"
-                disabled={loading || chatReady !== 1}
-                mx="auto"
-                maw={600}
-                miw={isMobile ? "300px" : "600px"}
+                size="md"
+                disabled={composerDisabled}
+                value={inputMessage}
                 onChange={(e) => {
                   setInputMessage(e.currentTarget.value);
                   setHistoryIndex(null);
                 }}
                 onKeyDown={handleKeyDown}
-                rightSection={inputIcon}
-                leftSection={
-                  <Tooltip label={t("aiPage.input.deleteTooltip")} withArrow>
-                    <IconTrash
-                      stroke={2}
-                      color="white"
-                      onClick={handleDeleteChat}
-                      size={32}
-                      style={{ cursor: "pointer" }}
-                      aria-label={t("aiPage.input.deleteAriaLabel")}
-                      role="button"
-                      tabIndex={0}
-                    />
-                  </Tooltip>
-                }
-                value={inputMessage}
                 aria-label={t("aiPage.input.ariaLabel")}
                 aria-describedby="chat-disclaimer"
+                styles={{
+                  input: {
+                    background: "rgba(5, 10, 18, 0.78)",
+                    border: "1px solid rgba(5, 217, 232, 0.5)",
+                    color: "var(--neon-text)",
+                    caretColor: "var(--neon-cyan)",
+                    fontFamily: '"Share Tech Mono", monospace',
+                    borderRadius: "12px",
+                  },
+                }}
               />
-              <Text
-                mt=".5rem"
-                ta="center"
-                size="sm"
-                c="dimmed"
-                id="chat-disclaimer"
+              <button
+                type="submit"
+                className={style.sendBtn}
+                disabled={composerDisabled || !inputMessage.trim()}
+                aria-label={t("aiPage.input.sendAriaLabel")}
               >
-                {t("aiPage.disclaimer")}
-              </Text>
-            </form>
-          </Stack>
-        </Stack>
-      </Box>
+                <IconArrowUp stroke={2.5} size={22} aria-hidden="true" />
+              </button>
+            </div>
+
+            {chatReady === 2 && error && (
+              <div className={style.errorStrip} role="alert">
+                <IconExclamationCircle size={16} aria-hidden="true" />
+                <span>{error}</span>
+              </div>
+            )}
+
+            <p className={style.disclaimer} id="chat-disclaimer">
+              {t("aiPage.disclaimer")}
+            </p>
+          </form>
+        </section>
+      </div>
     </>
   );
 };

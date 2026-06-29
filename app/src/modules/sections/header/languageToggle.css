@@ -1,71 +1,75 @@
-.language-toggle {
-  width: var(--nav-h, 42px);
+.lang-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
   height: var(--nav-h, 42px);
-  border-radius: 50%;
-  background: var(--base, #fff);
-  border: none;
-  padding: 0;
+  border-radius: 10px;
+  border: 1px solid rgba(5, 217, 232, 0.55);
+  background: rgba(7, 6, 15, 0.6);
+  box-shadow: 0 0 10px -2px var(--neon-cyan), inset 0 0 8px -4px var(--neon-cyan);
+  padding: 3px;
+  font-family: "Share Tech Mono", monospace;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* sliding active indicator (transform only) */
+.lang-indicator {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 7px;
+  background: rgba(5, 217, 232, 0.16);
+  border: 1px solid rgba(5, 217, 232, 0.6);
+  box-shadow: 0 0 12px -2px var(--neon-cyan), inset 0 0 8px -3px var(--neon-cyan);
+  transform: translateX(0);
+  transition: transform 0.25s ease;
+  pointer-events: none;
+}
+.lang-switch[data-active="nl"] .lang-indicator {
+  transform: translateX(100%);
+}
+
+.lang-opt {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 2.4rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  padding: 0 0.7rem;
+  background: transparent;
+  border: none;
   cursor: pointer;
-  position: relative;
-  transition: transform 0.2s ease;
-  flex-shrink: 0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: var(--neon-dim);
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+.lang-opt.is-active {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px var(--neon-cyan);
+}
+.lang-opt:not(.is-active):hover {
+  color: var(--neon-text);
+}
+.lang-opt:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+  border-radius: 7px;
 }
 
-/* Focus styles for language toggle */
-.language-toggle:focus-visible {
-  outline: 3px solid #dd6031;
-  outline-offset: 3px;
-  transform: scale(1.05);
-}
-
-.language-toggle:hover {
-  transform: scale(1.05);
-}
-
-.language-toggle:active {
-  transform: scale(0.95);
-}
-
-.flag-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.flag-icon {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-  overflow: hidden;
-}
-
-/* Ensure SVG fills the circular container properly */
-.language-toggle svg {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  clip-path: circle(50%);
-}
-
-.language-toggle svg * {
-  border-radius: 50%;
-}
-
-/* Mobile responsiveness */
 @media (max-width: 768px) {
-  .language-toggle {
-    width: 36px;
+  .lang-switch {
     height: 36px;
+  }
+  .lang-opt {
+    font-size: 0.78rem;
+    min-width: 2.1rem;
+    padding: 0 0.5rem;
   }
 }

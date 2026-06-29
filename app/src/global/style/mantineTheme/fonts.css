@@ -1,3 +1,9 @@
 /* import your fonts here, define them in the mantine theme afterwards */
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap');
+
+/* 80's synthwave neon faces */
+@import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap'); /* hero neon sign */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap'); /* headings */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap'); /* pills / labels / footer */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap'); /* CRT terminal */

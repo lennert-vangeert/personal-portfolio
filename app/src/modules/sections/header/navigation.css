@@ -1,258 +1,191 @@
-.pill-nav-container {
-  position: absolute;
-  top: 1em;
-  z-index: 99;
-}
-
-@media (max-width: 768px) {
-  .pill-nav-container {
-    width: 100%;
-    left: 0;
-  }
-}
-
-.pill-nav {
-  --nav-h: 42px;
-  --logo: 36px;
-  --pill-pad-x: 18px;
-  --pill-gap: 3px;
-  width: max-content;
-  display: flex;
-  align-items: center;
-  gap: var(--pill-gap);
-  box-sizing: border-box;
-}
-
-@media (max-width: 768px) {
-  .pill-nav {
-    width: 100%;
-    justify-content: space-between;
-    padding: 0 1rem;
-    background: transparent;
-  }
-}
-
-.pill-nav-items {
+/* ============================ NEON HEADER NAV ============================ */
+.neon-nav {
   position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
-  height: var(--nav-h);
-  background: var(--base, #000);
-  border-radius: 9999px;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.language-toggle-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@media (max-width: 768px) {
-  .language-toggle-wrapper {
-    order: 3;
-  }
-}
-
-.pill-list {
-  list-style: none;
-  display: flex;
-  align-items: stretch;
-  gap: var(--pill-gap);
-  margin: 0;
-  padding: 3px;
-  height: 100%;
-}
-
-.pill-list > li {
-  display: flex;
-  height: 100%;
-}
-
-.pill {
+/* ---- monogram logo ---- */
+.neon-logo {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  padding: 0 var(--pill-pad-x);
-  background: var(--pill-bg, #fff);
-  color: var(--pill-text, var(--base, #000));
+  gap: 0.04em;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 900;
+  font-size: 1.65rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
   text-decoration: none;
-  border-radius: 9999px;
-  box-sizing: border-box;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 0;
+  transition: transform 0.2s ease;
+}
+.neon-logo span {
+  text-shadow: 0 0 6px currentColor, 0 0 14px currentColor;
+}
+.neon-logo-l {
+  color: var(--neon-magenta);
+}
+.neon-logo-v {
+  color: var(--neon-cyan);
+}
+.neon-logo-g {
+  color: var(--neon-lime);
+}
+.neon-logo:hover {
+  transform: scale(1.05);
+}
+
+/* ---- right cluster ---- */
+.neon-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.neon-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- nav link ---- */
+.neon-link {
+  position: relative;
+  font-family: "Share Tech Mono", monospace;
   text-transform: uppercase;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.12em;
+  font-size: 0.95rem;
+  color: var(--neon-text);
+  text-decoration: none;
+  padding: 0.3rem 0.15rem;
   white-space: nowrap;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
-
-/* Focus styles for navigation pills */
-.pill:focus-visible {
-  outline: 3px solid #dd6031;
-  outline-offset: 3px;
-  z-index: 10;
-}
-
-.pill .hover-circle {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  border-radius: 50%;
-  background: var(--base, #000);
-  z-index: 1;
-  display: block;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.pill .label-stack {
-  position: relative;
-  display: inline-block;
-  line-height: 1;
-  z-index: 2;
-}
-
-.pill .pill-label {
-  position: relative;
-  z-index: 2;
-  display: inline-block;
-  line-height: 1;
-  will-change: transform;
-}
-
-.pill .pill-label-hover {
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--hover-text, #fff);
-  z-index: 3;
-  display: inline-block;
-  will-change: transform, opacity;
-}
-
-.pill.is-active::after {
+.neon-link::after {
   content: "";
   position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 12px;
-  height: 12px;
-  background: var(--base, #000);
-  border-radius: 50px;
-  z-index: 4;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+.neon-link:hover,
+.neon-link:focus-visible {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px var(--neon-cyan);
+}
+.neon-link:hover::after {
+  transform: scaleX(1);
+}
+.neon-link.is-active {
+  color: var(--neon-magenta);
+  text-shadow: 0 0 10px var(--neon-magenta);
+}
+.neon-link.is-active::after {
+  background: var(--neon-magenta);
+  box-shadow: 0 0 8px var(--neon-magenta);
+  transform: scaleX(1);
 }
 
-.desktop-only {
-  display: block;
-}
-
-.mobile-only {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .desktop-only {
-    display: none;
-  }
-
-  .mobile-only {
-    display: block;
-  }
-}
-
-.mobile-menu-button {
-  width: var(--nav-h);
-  height: var(--nav-h);
-  border-radius: 50%;
-  background: var(--base, #000);
-  border: none;
+/* ---- burger (mobile) ---- */
+.neon-burger {
   display: none;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   gap: 4px;
+  width: 42px;
+  height: 42px;
+  padding: 0 9px;
+  background: rgba(7, 6, 15, 0.55);
+  border: 1px solid rgba(5, 217, 232, 0.45);
+  border-radius: 9px;
+  box-shadow: 0 0 10px -3px var(--neon-cyan);
   cursor: pointer;
+}
+.neon-burger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 6px var(--neon-cyan);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.neon-burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.neon-burger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.neon-burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ---- mobile dropdown ---- */
+.neon-mobile-menu {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  min-width: 13rem;
+  padding: 0.5rem;
+  background: rgba(7, 6, 15, 0.96);
+  border: 1px solid rgba(255, 45, 149, 0.5);
+  border-radius: 14px;
+  box-shadow: 0 0 22px -4px rgba(255, 45, 149, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scaleY(0.96);
+  transform-origin: top center;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 999;
+}
+.neon-mobile-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scaleY(1);
+}
+.neon-mobile-menu ul {
+  list-style: none;
+  margin: 0;
   padding: 0;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.neon-mobile-menu .neon-link {
+  display: block;
+  padding: 0.75rem 0.9rem;
+  border-radius: 9px;
+}
+.neon-mobile-menu .neon-link::after {
+  display: none;
+}
+.neon-mobile-menu .neon-link:hover,
+.neon-mobile-menu .neon-link.is-active {
+  background: rgba(5, 217, 232, 0.08);
 }
 
-/* Focus styles for mobile menu button */
-.mobile-menu-button:focus-visible {
-  outline: 3px solid #dd6031;
-  outline-offset: 3px;
-}
-
-@media (max-width: 768px) {
-  .mobile-menu-button {
+/* ---- responsive ---- */
+@media (max-width: 48rem) {
+  .neon-nav-links {
+    display: none;
+  }
+  .neon-burger {
     display: flex;
   }
 }
-
-.hamburger-line {
-  width: 16px;
-  height: 2px;
-  background: var(--pill-bg, #fff);
-  border-radius: 1px;
-  transition: all 0.01s ease;
-  transform-origin: center;
-}
-
-.mobile-menu-popover {
-  position: absolute;
-  top: 3em;
-  left: 1rem;
-  right: 1rem;
-  background: var(--base, #f0f0f0);
-  border-radius: 27px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-  z-index: 998;
-  opacity: 0;
-  transform-origin: top center;
-  visibility: hidden;
-  padding-bottom: 1rem;
-}
-
-.mobile-menu-list {
-  list-style: none;
-  margin: 0;
-  padding: 3px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.mobile-menu-popover .mobile-menu-link {
-  display: block;
-  padding: 12px 16px;
-  color: var(--pill-text, #fff);
-  background-color: var(--pill-bg, #fff);
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 50px;
-  transition: all 0.2s ease;
-}
-
-/* Focus styles for mobile menu links */
-.mobile-menu-popover .mobile-menu-link:focus-visible {
-  outline: 3px solid #dd6031;
-  outline-offset: 2px;
-}
-
-.mobile-menu-popover .mobile-menu-link:hover {
-  cursor: pointer;
-  background-color: var(--base);
-  color: var(--hover-text, #fff);
-}
-
-.mobile-language-toggle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px;
+@media (min-width: 48.0625rem) {
+  .neon-mobile-menu {
+    display: none;
+  }
 }

@@ -10,17 +10,16 @@ import { store } from "@global/store/store";
 import { Notifications } from "@mantine/notifications";
 import "@global/style/mantineTheme/fonts.css";
 import "@global/style/main.css";
-import ParticlesBackground from "@common/particleBackground";
+import SynthwaveOverlay from "@common/synthwaveOverlay";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <MantineStyles>
       <MantineProvider>
         <Provider store={store}>
-            <ParticlesBackground>
-              <Notifications />
-              <RouterProvider router={router} />
-            </ParticlesBackground>
+          <SynthwaveOverlay />
+          <Notifications />
+          <RouterProvider router={router} />
         </Provider>
       </MantineProvider>
     </MantineStyles>

@@ -1,12 +1,35 @@
+/* =========================================================================
+   80's SYNTHWAVE NEON — design tokens + reusable utilities
+   ========================================================================= */
+:root {
+  --neon-bg: #07060f;
+  --neon-magenta: #ff2d95;
+  --neon-cyan: #05d9e8;
+  --neon-orange: #ff6b1a;
+  --neon-yellow: #ffd319;
+  --neon-lime: #39ff14;
+  --neon-purple: #b026ff;
+  --neon-text: #e8e6ff;
+  --neon-dim: #9a96c4;
+  --neon-panel: rgba(15, 12, 32, 0.55);
+}
+
+html,
+body {
+  background: var(--neon-bg);
+  color-scheme: dark;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* Accessibility - Focus Indicators */
+/* Accessibility — neon focus indicators */
 *:focus-visible {
-  outline: 3px solid #dd6031;
+  outline: 2px solid var(--neon-cyan);
   outline-offset: 2px;
+  box-shadow: 0 0 8px var(--neon-cyan);
 }
 
 button:focus-visible,
@@ -16,8 +39,9 @@ textarea:focus-visible,
 select:focus-visible,
 [role="button"]:focus-visible,
 [tabindex]:focus-visible {
-  outline: 3px solid #dd6031;
+  outline: 2px solid var(--neon-cyan);
   outline-offset: 2px;
+  box-shadow: 0 0 8px var(--neon-cyan);
 }
 
 /* Remove default focus outline for mouse users */
@@ -25,14 +49,241 @@ select:focus-visible,
   outline: none;
 }
 
-/* Variables */
-:root {
-  --sb-track-color: #b9c2cc;
-  --sb-thumb-color: #dd6031;
-  --sb-size: 12px; /* slightly smaller for consistency across browsers */
+/* =========================================================================
+   Neon glow utilities — components set the colour, the recipe stays shared
+   ========================================================================= */
+.neon-text {
+  text-shadow: 0 0 4px currentColor, 0 0 14px currentColor;
+}
+/* lighter, body-friendly halo */
+.neon-text--soft {
+  text-shadow: 0 0 4px currentColor, 0 0 10px currentColor;
+}
+.neon-text--magenta {
+  color: var(--neon-magenta);
+}
+.neon-text--cyan {
+  color: var(--neon-cyan);
+}
+.neon-text--orange {
+  color: var(--neon-orange);
+}
+.neon-text--yellow {
+  color: var(--neon-yellow);
+}
+.neon-text--lime {
+  color: var(--neon-lime);
+}
+.neon-text--purple {
+  color: var(--neon-purple);
 }
 
-/* Chrome, Edge, Safari */
+/* Glowing tube border for cards / nav / pills. Colour from currentColor. */
+.neon-box {
+  border: 1px solid currentColor;
+  box-shadow: 0 0 9px -1px currentColor, inset 0 0 9px -3px currentColor;
+}
+.neon-box--magenta {
+  color: var(--neon-magenta);
+}
+.neon-box--cyan {
+  color: var(--neon-cyan);
+}
+.neon-box--orange {
+  color: var(--neon-orange);
+}
+.neon-box--yellow {
+  color: var(--neon-yellow);
+}
+.neon-box--lime {
+  color: var(--neon-lime);
+}
+.neon-box--purple {
+  color: var(--neon-purple);
+}
+
+/* Reusable hover glow: a pre-rendered glow layer faded in via opacity.
+   Cheap (opacity is compositor-friendly) — never animate box-shadow directly. */
+.neon-glow-hover {
+  position: relative;
+  isolation: isolate;
+}
+.neon-glow-hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 18px 0 currentColor, inset 0 0 14px -3px currentColor;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+.neon-glow-hover:hover::before,
+.neon-glow-hover:focus-visible::before {
+  opacity: 1;
+}
+
+/* Tube pill (tech badges, footer chips) — static glow + opacity hover halo */
+.neon-pill {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  font-family: "Share Tech Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.8rem;
+  line-height: 1;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: var(--neon-panel);
+  border: 1px solid currentColor;
+  box-shadow: 0 0 7px -1px currentColor, inset 0 0 7px -3px currentColor;
+  text-shadow: 0 0 6px currentColor;
+  transition: transform 0.2s ease;
+}
+.neon-pill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 14px 0 currentColor, inset 0 0 11px -2px currentColor;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+.neon-pill:hover {
+  transform: translateY(-1px);
+}
+.neon-pill:hover::before {
+  opacity: 1;
+}
+
+/* =========================================================================
+   Flicker — buzzing neon tube. Motion gated behind reduced-motion.
+   ========================================================================= */
+@media (prefers-reduced-motion: no-preference) {
+  .neon-flicker {
+    animation: neon-flicker 4.5s infinite steps(1);
+  }
+  .neon-flicker-hover:hover {
+    animation: neon-flicker 0.45s infinite steps(1);
+  }
+  @keyframes neon-flicker {
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+      opacity: 1;
+    }
+    20%,
+    24%,
+    55% {
+      opacity: 0.35;
+    }
+  }
+}
+
+/* =========================================================================
+   Static scanline overlay (do NOT animate — perf)
+   ========================================================================= */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.16) 0px,
+    rgba(0, 0, 0, 0.16) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.5;
+}
+
+/* =========================================================================
+   Static / VHS grain — fixed SVG noise, rasterized once (no animation = free)
+   ========================================================================= */
+.static-noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 61;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* =========================================================================
+   Synthwave perspective grid — fixed at the horizon, behind content
+   ========================================================================= */
+.synth-grid {
+  position: fixed;
+  left: -25%;
+  right: -25%;
+  bottom: 0;
+  height: 42vh;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+  transform: perspective(38vh) rotateX(72deg);
+  transform-origin: bottom center;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 88%);
+  mask-image: linear-gradient(to top, #000 0%, transparent 88%);
+  opacity: 0.45;
+}
+/* texture lives on a taller child so we scroll it with transform (compositor) */
+.synth-grid::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(100% + 3.2rem);
+  background-image: linear-gradient(
+      to right,
+      rgba(5, 217, 232, 0.35) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 45, 149, 0.35) 1px, transparent 1px);
+  background-size: 3.2rem 3.2rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .synth-grid::before {
+    will-change: transform;
+    animation: synth-grid-scroll 6s linear infinite;
+  }
+  @keyframes synth-grid-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(0, -3.2rem, 0);
+    }
+  }
+}
+@media (max-width: 36rem) {
+  .synth-grid {
+    height: 30vh;
+    opacity: 0.35;
+  }
+}
+
+/* =========================================================================
+   Scrollbar — neon magenta thumb with glow
+   ========================================================================= */
+:root {
+  --sb-track-color: rgba(232, 230, 255, 0.06);
+  --sb-thumb-color: var(--neon-magenta);
+  --sb-size: 12px;
+}
+
 *::-webkit-scrollbar {
   width: var(--sb-size);
   height: var(--sb-size);
@@ -46,58 +297,61 @@ select:focus-visible,
 *::-webkit-scrollbar-thumb {
   background-color: var(--sb-thumb-color);
   border-radius: 3px;
-  border: 3px solid var(--sb-track-color); /* padding effect */
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 8px var(--neon-magenta);
 }
 
 /* Firefox */
 * {
-  scrollbar-width: thin; /* options: auto, thin, none */
+  scrollbar-width: thin;
   scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
 }
 
 /* Optionally hide scrollbar completely but keep scrolling */
 .hide-scrollbar {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none;
 }
 
+/* =========================================================================
+   Mantine component overrides (re-skinned to neon)
+   ========================================================================= */
 /* segmentedControl */
 .mantine-SegmentedControl-root {
-  background: rgba(255, 255, 255, 0.088) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: rgba(12, 20, 30, 0.85) !important;
+  border: 1px solid rgba(5, 217, 232, 0.35);
+  box-shadow: inset 0 0 10px -4px var(--neon-cyan);
   font-family: "Audiowide", sans-serif;
 }
 .mantine-SegmentedControl-label {
-  color: rgb(255, 255, 255);
+  color: var(--neon-text);
 }
 .mantine-SegmentedControl-label:not([data-active="true"]):hover {
   color: var(--mantine-color-default-5);
 }
-/* textarea */
 
+/* textarea */
 .mantine-Textarea-input:disabled,
 .mantine-Textarea-input[data-disabled="true"] {
-  /* your styles go here */
   background: rgba(255, 255, 255, 0.1);
   cursor: not-allowed;
   opacity: 0.6;
 }
 
 /* tooltip */
-
 .mantine-Tooltip-tooltip {
-  color: white;
+  color: var(--neon-text);
   padding: 0.25rem;
+  border: 1px solid rgba(5, 217, 232, 0.4);
+  box-shadow: 0 0 10px -3px var(--neon-cyan);
 }
 
 /* Title */
-
 .mantine-Title-root {
   white-space: pre-line;
 }

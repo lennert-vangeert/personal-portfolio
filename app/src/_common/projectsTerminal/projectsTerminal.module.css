@@ -1,0 +1,286 @@
+/* ============================ CRT TERMINAL WINDOW ============================ */
+.window {
+  --accent: var(--neon-cyan);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1280px;
+  margin: 1.25rem auto 0;
+  height: clamp(440px, calc(88vh - 2rem), 880px);
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(5, 217, 232, 0.45);
+  background: rgba(7, 10, 20, 0.92);
+  box-shadow: 0 0 30px -8px var(--neon-cyan),
+    inset 0 0 40px -18px var(--neon-cyan);
+}
+
+/* ---- title bar ---- */
+.titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(5, 217, 232, 0.25);
+  background: rgba(5, 217, 232, 0.04);
+  font-family: "Share Tech Mono", monospace;
+}
+.titleLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+.windowDots {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+.windowDots span {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  box-shadow: 0 0 7px currentColor;
+}
+.dotMagenta {
+  background: var(--neon-magenta);
+  color: var(--neon-magenta);
+}
+.dotYellow {
+  background: var(--neon-yellow);
+  color: var(--neon-yellow);
+}
+.dotLime {
+  background: var(--neon-lime);
+  color: var(--neon-lime);
+}
+.titleName {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px rgba(5, 217, 232, 0.6);
+  letter-spacing: 0.1em;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neon-lime);
+  white-space: nowrap;
+}
+.led {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--neon-lime);
+  box-shadow: 0 0 8px var(--neon-lime);
+}
+.caret {
+  display: inline-block;
+  width: 0.6ch;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan);
+  color: transparent;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .caret {
+    animation: caret-blink 1s steps(1) infinite;
+  }
+  .led {
+    animation: led-pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes caret-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  @keyframes led-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+}
+
+/* ---- body ---- */
+.body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ---- list pane ---- */
+.listPane {
+  flex: 0 0 38%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 1rem 0.8rem;
+  list-style: none;
+  overflow-y: auto;
+  border-right: 1px solid rgba(5, 217, 232, 0.22);
+  font-family: "Share Tech Mono", monospace;
+}
+.listPane:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: -2px;
+}
+.fileRow {
+  --accent: var(--neon-cyan);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  color: var(--neon-dim);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.fileRow[aria-selected="true"] {
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.fileRow:not([aria-selected="true"]):hover {
+  color: var(--neon-text);
+}
+.cursor {
+  visibility: hidden;
+}
+.fileRow[aria-selected="true"] .cursor {
+  visibility: visible;
+}
+.fileName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---- preview pane ---- */
+.previewPane {
+  flex: 1;
+  min-width: 0;
+  padding: 1.25rem 1.4rem;
+  overflow-y: auto;
+}
+.previewFade {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .previewFade {
+    animation: preview-in 0.25s ease both;
+  }
+  @keyframes preview-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+.previewImageWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 18rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: 0.6rem;
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 0 24px -12px var(--accent);
+}
+.previewImage {
+  width: auto;
+  max-width: 100%;
+  max-height: 18rem;
+}
+.previewDesc {
+  margin: 0;
+  color: var(--neon-text);
+  line-height: 1.6;
+}
+.techRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.openBtn,
+.openDisabled {
+  align-self: flex-start;
+  position: relative;
+  isolation: isolate;
+  font-family: "Share Tech Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent);
+  box-shadow: 0 0 10px -3px var(--accent), inset 0 0 10px -6px var(--accent);
+}
+.openBtn {
+  cursor: pointer;
+}
+.openDisabled {
+  opacity: 0.5;
+  border-color: var(--neon-dim);
+  color: var(--neon-dim);
+  text-shadow: none;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* ---- footer hint ---- */
+.hint {
+  flex-shrink: 0;
+  padding: 0.45rem 1rem;
+  border-top: 1px solid rgba(5, 217, 232, 0.2);
+  background: rgba(5, 217, 232, 0.03);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neon-dim);
+  text-align: right;
+}
+
+/* ---- mobile: stack, list becomes a horizontal chip row ---- */
+@media (max-width: 48rem) {
+  .window {
+    height: clamp(520px, calc(88vh - 2rem), 900px);
+  }
+  .body {
+    flex-direction: column;
+  }
+  .listPane {
+    flex: 0 0 auto;
+    flex-direction: row;
+    gap: 0.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-right: none;
+    border-bottom: 1px solid rgba(5, 217, 232, 0.22);
+  }
+  .fileRow {
+    border: 1px solid var(--accent);
+  }
+  .fileRow .cursor {
+    display: none;
+  }
+}

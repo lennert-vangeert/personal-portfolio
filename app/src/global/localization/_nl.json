@@ -17,7 +17,13 @@
     },
     "intro": {
       "greeting": "Hallo, ik ben",
+      "role": "Full-Stack Developer",
+      "viewProjects": "Bekijk projecten",
+      "talkToAI": "Praat met mijn AI",
       "description": "Ik ben een softwareontwikkelaar met een passie voor het creëren van innovatieve oplossingen, gevestigd in Vlaanderen, België."
+    },
+    "about": {
+      "title": "Over mij"
     },
     "contact": {
       "title": "Contacteer mij",
@@ -111,6 +117,18 @@
     "welcome": {
       "title": "Ontmoet mijn AI Assistent",
       "description": "Je kunt deze assistent alles vragen over mij of mijn portfolio."
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "connecting": "Verbinden"
+    },
+    "suggestions": {
+      "title": "Probeer te vragen",
+      "stack": "Wat is je tech stack?",
+      "projects": "Vertel me over je projecten",
+      "experience": "Wat is je werkervaring?",
+      "contact": "Hoe kan ik je bereiken?"
     },
     "input": {
       "placeholder": "Jouw vraag...",

@@ -1,9 +1,11 @@
 import { AppShell, Box, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { ReactNode, useEffect, useMemo, useRef } from "react";
+import { ReactNode, Suspense, useEffect, useMemo, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import Header, { headerHeight } from "../header";
+import Footer from "../footer";
+import RouteFallback from "@common/routeFallback";
 import { useTranslate } from "@global/localization";
 import style from "./pageWrapper.module.css";
 
@@ -109,9 +111,13 @@ const PageWrapper = ({ children }: PageWrapperProps) => {
           }}
         >
           {/* Render direct children if provided, otherwise fallback to nested routes */}
-          {children ?? <Outlet />}
+          {children ?? (
+            <Suspense fallback={<RouteFallback />}>
+              <Outlet />
+            </Suspense>
+          )}
+          <Footer />
         </Box>
-        {/* <Footer /> */}
       </AppShell>
     </>
   );

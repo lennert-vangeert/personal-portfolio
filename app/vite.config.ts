@@ -59,7 +59,6 @@ export default defineConfig({
           mantine: [
             "@mantine/core",
             "@mantine/hooks",
-            "@mantine/carousel",
             "@mantine/notifications",
           ],
         },

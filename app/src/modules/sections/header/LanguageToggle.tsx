@@ -1,24 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { gsap } from "gsap";
 import i18next from "i18next";
-import BelgiumFlag from "./_assets/belgium.svg?react";
-import UKFlag from "./_assets/uk.svg?react";
 import "./languageToggle.css";
 
-interface LanguageToggleProps {
-  ease?: string;
-  onLanguageChange?: (lang: string) => void;
-}
+const LANGS = ["en", "nl"] as const;
 
-const LanguageToggle: React.FC<LanguageToggleProps> = ({
-  ease = "power3.easeOut",
-  onLanguageChange,
-}) => {
+const LanguageToggle: React.FC = () => {
   const [currentLanguage, setCurrentLanguage] = useState(i18next.language);
   const navigate = useNavigate();
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const flagTweenRef = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
     const handleLanguageChangeEvent = () => {
@@ -31,43 +20,35 @@ const LanguageToggle: React.FC<LanguageToggleProps> = ({
     };
   }, []);
 
-  const handleLanguageChange = () => {
-    const newLang = currentLanguage === "en" ? "nl" : "en";
-    i18next.changeLanguage(newLang);
-    navigate(`/${newLang}`);
-    onLanguageChange?.(newLang);
-  };
+  const active = currentLanguage === "nl" ? "nl" : "en";
 
-  const handleFlagEnter = () => {
-    const container = containerRef.current;
-    if (!container) return;
-    flagTweenRef.current?.kill();
-    gsap.set(container, { rotate: 0 });
-    flagTweenRef.current = gsap.to(container, {
-      rotate: 20,
-      duration: 0.2,
-      ease,
-      overwrite: "auto",
-    });
-    flagTweenRef.current.yoyo(true).repeat(1);
+  const setLang = (lang: "en" | "nl") => {
+    if (lang === active) return;
+    i18next.changeLanguage(lang);
+    navigate(`/${lang}`);
   };
 
   return (
-    <button
-      className="language-toggle"
-      onClick={handleLanguageChange}
-      onMouseEnter={handleFlagEnter}
-      aria-label={`Switch to ${currentLanguage === "en" ? "Dutch" : "English"}`}
-      title={`Switch to ${currentLanguage === "en" ? "Nederlands" : "English"}`}
+    <div
+      className="lang-switch"
+      role="group"
+      aria-label="Language"
+      data-active={active}
     >
-      <div className="flag-container" ref={containerRef}>
-        {currentLanguage === "en" ? (
-          <UKFlag className="flag-icon" />
-        ) : (
-          <BelgiumFlag className="flag-icon" />
-        )}
-      </div>
-    </button>
+      <span className="lang-indicator" aria-hidden="true" />
+      {LANGS.map((lang) => (
+        <button
+          key={lang}
+          type="button"
+          className={`lang-opt${active === lang ? " is-active" : ""}`}
+          onClick={() => setLang(lang)}
+          aria-pressed={active === lang}
+          aria-label={`Switch to ${lang === "en" ? "English" : "Nederlands"}`}
+        >
+          {lang.toUpperCase()}
+        </button>
+      ))}
+    </div>
   );
 };
 

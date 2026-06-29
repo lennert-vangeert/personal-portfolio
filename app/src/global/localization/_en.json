@@ -17,7 +17,13 @@
     },
     "intro": {
       "greeting": "Hi, I'm",
+      "role": "Full-Stack Developer",
+      "viewProjects": "View Projects",
+      "talkToAI": "Talk to my AI",
       "description": "I'm a software developer with a passion for creating innovative solutions based in Flanders, Belgium."
+    },
+    "about": {
+      "title": "About"
     },
     "contact": {
       "title": "Contact me",
@@ -111,6 +117,18 @@
     "welcome": {
       "title": "Meet my AI Assistant",
       "description": "You can ask this assistant anything about me or my portfolio."
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "connecting": "Connecting"
+    },
+    "suggestions": {
+      "title": "Try asking",
+      "stack": "What's your tech stack?",
+      "projects": "Tell me about your projects",
+      "experience": "What's your work experience?",
+      "contact": "How can I reach you?"
     },
     "input": {
       "placeholder": "Your question...",

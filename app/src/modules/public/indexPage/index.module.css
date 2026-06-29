@@ -1,30 +1,466 @@
-.outer {
-  display: inline-block;
-  perspective: 500px;
+/* ============================ HERO ============================ */
+.hero {
+  position: relative;
+  padding: 1.5rem 0 3rem;
+  --px: 0;
+  --py: 0;
+}
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  align-items: center;
+  gap: 2.5rem;
+}
+.heroText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+  min-width: 0;
+}
+.heroVisual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 14rem;
 }
 
-.inner {
-  display: inline-block;
-  transform-origin: center;
-  animation: explode 1s forwards;
+.eyebrow {
+  margin: 0;
+  font-family: "Share Tech Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.8rem;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px var(--neon-cyan);
 }
 
-.letter {
+.sign {
+  margin: 0;
+  font-family: "Monoton", cursive;
+  font-weight: 400;
+  line-height: 1.05;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.12em;
+  transform: translate3d(calc(var(--px) * 6px), calc(var(--py) * 6px), 0);
+  transition: transform 0.2s ease;
+}
+.signLine1 {
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  color: #fff;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-shadow: 0 0 6px var(--neon-magenta), 0 0 26px var(--neon-magenta);
+}
+.signLine2 {
+  font-size: clamp(1.1rem, 3.2vw, 2.2rem);
+  color: #fff;
+  letter-spacing: 0.18em;
+  white-space: nowrap;
+  text-shadow: 0 0 6px var(--neon-cyan), 0 0 22px var(--neon-cyan);
+}
+.flickerLetter {
   display: inline-block;
 }
 
-/* Animation */
-@keyframes explode {
-  0% {
-    transform: rotate(0deg) translateZ(0) scale(1);
-    opacity: 1;
+.role {
+  margin: 0.15rem 0 0;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: clamp(0.78rem, 2vw, 1.1rem);
+  color: var(--neon-yellow);
+  text-shadow: 0 0 10px var(--neon-yellow);
+}
+
+.ipaRow {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--neon-dim);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.85rem;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.85rem;
+}
+.neonBtn {
+  font-family: "Share Tech Mono", monospace !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--neon-panel) !important;
+  box-shadow: 0 0 9px -2px currentColor, inset 0 0 9px -4px currentColor;
+  text-shadow: 0 0 8px currentColor;
+  transition: transform 0.2s ease;
+}
+.neonBtn:hover {
+  transform: translateY(-1px);
+}
+
+/* hero visual layers (parallax via CSS vars) */
+.heroCircuits {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150%;
+  max-width: 560px;
+  height: auto;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%)
+    translate3d(calc(var(--px) * 12px), calc(var(--py) * 12px), 0);
+}
+.avatar {
+  position: relative;
+  z-index: 1;
+  border-radius: 50%;
+  border: 2px solid var(--neon-cyan);
+  box-shadow: 0 0 22px -4px var(--neon-cyan), inset 0 0 18px -6px var(--neon-cyan);
+  transform: translate3d(calc(var(--px) * -5px), calc(var(--py) * -5px), 0);
+  transition: transform 0.2s ease;
+}
+
+/* one-shot power-on (opacity only — never touch the parallax transforms) */
+@media (prefers-reduced-motion: no-preference) {
+  .heroText > *,
+  .heroVisual {
+    animation: power-on 0.6s ease both;
   }
-  50% {
-    transform: rotate(720deg) translateZ(50px) scale(1.5);
-    opacity: 0.7;
+  .heroText > *:nth-child(1) {
+    animation-delay: 0.05s;
   }
-  100% {
-    transform: rotate(1080deg) translateZ(200px) scale(0);
-    opacity: 0;
+  .heroText > *:nth-child(2) {
+    animation-delay: 0.12s;
+  }
+  .heroText > *:nth-child(3) {
+    animation-delay: 0.19s;
+  }
+  .heroText > *:nth-child(4) {
+    animation-delay: 0.26s;
+  }
+  .heroText > *:nth-child(5) {
+    animation-delay: 0.33s;
+  }
+  .heroVisual {
+    animation-delay: 0.2s;
+  }
+  @keyframes power-on {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* ============================ SECTIONS ============================ */
+.section {
+  margin-top: 3.5rem;
+}
+
+/* ===== ABOUT terminal ===== */
+.terminal {
+  margin-top: 1.25rem;
+  max-width: 52rem;
+  border-radius: 12px;
+  background: rgba(12, 18, 30, 0.85);
+  border: 1px solid currentColor;
+  box-shadow: 0 0 12px -4px currentColor, inset 0 0 18px -11px currentColor;
+  overflow: hidden;
+}
+.terminalBar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid rgba(5, 217, 232, 0.25);
+  background: rgba(5, 217, 232, 0.05);
+}
+.termDots {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+.termDots span {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  box-shadow: 0 0 6px currentColor;
+}
+.dotMagenta {
+  background: var(--neon-magenta);
+  color: var(--neon-magenta);
+}
+.dotYellow {
+  background: var(--neon-yellow);
+  color: var(--neon-yellow);
+}
+.dotLime {
+  background: var(--neon-lime);
+  color: var(--neon-lime);
+}
+.termName {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--neon-dim);
+}
+.terminalBody {
+  margin: 0;
+  padding: 1.2rem 1.3rem;
+  font-family: "Share Tech Mono", monospace;
+  color: var(--neon-text);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.prompt {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px var(--neon-cyan);
+}
+.caret {
+  display: inline-block;
+  width: 0.6ch;
+  margin-left: 0.25rem;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan);
+  color: transparent;
+  vertical-align: text-bottom;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .caret {
+    animation: caret-blink 1s steps(1) infinite;
+  }
+  @keyframes caret-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+}
+
+/* ===== CONNECT ===== */
+.connectGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.connectCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 1.1rem 1.3rem;
+  border-radius: 12px;
+  background: var(--neon-panel);
+  border: 1px solid currentColor;
+  box-shadow: 0 0 9px -3px currentColor, inset 0 0 10px -6px currentColor;
+  font-family: "Share Tech Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+  transition: transform 0.2s ease;
+}
+.connectCard:hover {
+  transform: translateY(-2px);
+}
+.connectLabel {
+  text-shadow: 0 0 8px currentColor;
+}
+.connectArrow {
+  flex-shrink: 0;
+  transform: rotate(-45deg);
+  transition: transform 0.2s ease;
+}
+.connectCard:hover .connectArrow {
+  transform: rotate(-45deg) translate(3px, -3px);
+}
+
+/* ===== JOURNEY boot sequence ===== */
+.bootBody {
+  padding: 1rem 1.3rem 1.2rem;
+  font-family: "Share Tech Mono", monospace;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.bootIntro {
+  margin: 0 0 0.2rem;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px var(--neon-cyan);
+  letter-spacing: 0.05em;
+}
+.bootList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.bootLine {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+.okTag {
+  flex-shrink: 0;
+  color: var(--neon-lime);
+  text-shadow: 0 0 8px var(--neon-lime);
+  padding-top: 0.05rem;
+  white-space: nowrap;
+}
+.bootEntry {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.bootTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.bootTitle {
+  color: var(--neon-text);
+  font-weight: 600;
+}
+.activeTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--neon-magenta);
+  border: 1px solid var(--neon-magenta);
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  text-shadow: 0 0 6px var(--neon-magenta);
+  white-space: nowrap;
+}
+.activeDot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--neon-magenta);
+  box-shadow: 0 0 6px var(--neon-magenta);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .activeDot {
+    animation: active-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes active-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+}
+.bootMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.9rem;
+  font-size: 0.85rem;
+}
+.bootLink {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px rgba(5, 217, 232, 0.4);
+}
+.bootLink:hover {
+  text-decoration: underline;
+}
+.bootPeriod {
+  color: var(--neon-dim);
+}
+.bootNext {
+  margin: 0.3rem 0 0;
+  color: var(--neon-dim);
+}
+
+/* ===== ARSENAL HUD ===== */
+.hudGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.hudModule {
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 1rem 1rem 1rem 1.5rem;
+  border-radius: 12px;
+  background: var(--neon-panel);
+  border: 1px solid currentColor;
+  box-shadow: inset 0 0 16px -10px currentColor;
+}
+.hudRail {
+  position: absolute;
+  left: 0.55rem;
+  top: 1rem;
+  bottom: 1rem;
+  width: 3px;
+  border-radius: 3px;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+}
+.hudLabel {
+  display: block;
+  font-family: "Share Tech Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.78rem;
+  text-shadow: 0 0 8px currentColor;
+  margin-bottom: 0.7rem;
+}
+.techPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ============================ RESPONSIVE ============================ */
+@media (max-width: 75rem) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+  .heroText {
+    align-items: center;
+  }
+  .sign {
+    align-items: center;
+  }
+  .heroVisual {
+    order: -1;
+    min-height: 11rem;
+  }
+}
+
+@media (max-width: 36rem) {
+  .heroCircuits {
+    display: none;
+  }
+  .avatar {
+    width: 9rem !important;
+    height: 9rem !important;
+  }
+  .signLine1 {
+    text-shadow: 0 0 6px var(--neon-magenta), 0 0 18px var(--neon-magenta);
   }
 }

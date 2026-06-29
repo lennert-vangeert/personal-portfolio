@@ -1,0 +1,84 @@
+.neon-footer {
+  margin-top: 4rem;
+  padding: 2rem 2.5rem 2.5rem;
+}
+
+.neon-footer-divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--neon-magenta),
+    var(--neon-cyan),
+    transparent
+  );
+  box-shadow: 0 0 12px var(--neon-magenta);
+  margin-bottom: 1.5rem;
+}
+
+.neon-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.neon-footer-logo {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 900;
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  gap: 0.04em;
+}
+.neon-footer-logo span {
+  text-shadow: 0 0 6px currentColor, 0 0 14px currentColor;
+}
+.footL {
+  color: var(--neon-magenta);
+}
+.footV {
+  color: var(--neon-cyan);
+}
+.footG {
+  color: var(--neon-lime);
+}
+
+.neon-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.neon-footer-link {
+  font-family: "Share Tech Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.85rem;
+  color: var(--neon-text);
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+.neon-footer-link:hover,
+.neon-footer-link:focus-visible {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.neon-footer-copy {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--neon-dim);
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 36rem) {
+  .neon-footer-inner {
+    justify-content: center;
+    text-align: center;
+  }
+}

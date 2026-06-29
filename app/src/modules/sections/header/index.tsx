@@ -1,32 +1,24 @@
-import { useTranslate } from "@global/localization";
-import { AppShellHeader, Center, useMantineTheme } from "@mantine/core";
-import PillNav from "./navigation";
+import { AppShellHeader } from "@mantine/core";
+import NeonNav from "./navigation";
 
 export const headerHeight = "10vh";
 
 const Header = () => {
-  const theme = useMantineTheme();
-  const { t, tL } = useTranslate();
   return (
     <AppShellHeader
       withBorder={false}
       h={headerHeight}
       px="2.5rem"
-      py="1rem"
-      bg="transparent"
+      py="0.75rem"
+      style={{
+        background: "rgba(7, 6, 15, 0.5)",
+        WebkitBackdropFilter: "blur(8px)",
+        backdropFilter: "blur(8px)",
+        borderBottom: "1px solid rgba(5, 217, 232, 0.22)",
+        boxShadow: "0 6px 20px -10px rgba(255, 45, 149, 0.55)",
+      }}
     >
-      <Center>
-        <PillNav
-          items={[
-            { label: t("header.nav.home"), href: tL("/") },
-            { label: t("header.nav.projects"), href: tL("/projects") },
-            { label: t("header.nav.lennertai"), href: tL("/ask-a-question") },
-          ]}
-          baseColor="#434243ff"
-          pillColor={theme.colors.default[5]}
-          pillTextColor="#fff"
-        />
-      </Center>
+      <NeonNav />
     </AppShellHeader>
   );
 };
