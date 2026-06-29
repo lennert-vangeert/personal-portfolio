@@ -17,28 +17,6 @@
   border-bottom: 1px solid rgba(5, 217, 232, 0.25);
   background: rgba(5, 217, 232, 0.05);
 }
-.dots {
-  display: inline-flex;
-  gap: 0.35rem;
-}
-.dots span {
-  width: 0.65rem;
-  height: 0.65rem;
-  border-radius: 50%;
-  box-shadow: 0 0 6px currentColor;
-}
-.dotMagenta {
-  background: var(--neon-magenta);
-  color: var(--neon-magenta);
-}
-.dotYellow {
-  background: var(--neon-yellow);
-  color: var(--neon-yellow);
-}
-.dotLime {
-  background: var(--neon-lime);
-  color: var(--neon-lime);
-}
 .name {
   font-size: 0.8rem;
   letter-spacing: 0.08em;

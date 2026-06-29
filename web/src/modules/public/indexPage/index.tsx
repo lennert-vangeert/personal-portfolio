@@ -228,12 +228,7 @@ const IndexPage = () => {
           <Reveal delay={80}>
             <div className={`${style.terminal} neon-box--cyan`}>
               <div className={style.terminalBar}>
-                <span className={style.termDots} aria-hidden="true">
-                  <span className={style.dotMagenta} />
-                  <span className={style.dotYellow} />
-                  <span className={style.dotLime} />
-                </span>
-                <span className={style.termName}>~/about.txt</span>
+                <span className={style.termName}>C:\&gt;TYPE ABOUT.TXT</span>
               </div>
               <p className={style.terminalBody}>
                 <span className={style.prompt}>&gt;</span>{" "}
@@ -280,12 +275,7 @@ const IndexPage = () => {
           </Reveal>
           <div className={`${style.terminal} neon-box--purple`}>
             <div className={style.terminalBar}>
-              <span className={style.termDots} aria-hidden="true">
-                <span className={style.dotMagenta} />
-                <span className={style.dotYellow} />
-                <span className={style.dotLime} />
-              </span>
-              <span className={style.termName}>~/journey.log</span>
+              <span className={style.termName}>C:\&gt;TYPE JOURNEY.LOG</span>
             </div>
             <div className={style.bootBody}>
               <p className={style.bootIntro}>&gt; LOADING CAREER.SYS...</p>

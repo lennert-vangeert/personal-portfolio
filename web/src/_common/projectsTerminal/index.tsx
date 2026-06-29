@@ -60,12 +60,7 @@ const ProjectsTerminal = () => {
     <section className={style.window} aria-label="Projects browser">
       <header className={style.titlebar}>
         <div className={style.titleLeft}>
-          <span className={style.windowDots} aria-hidden="true">
-            <span className={style.dotMagenta} />
-            <span className={style.dotYellow} />
-            <span className={style.dotLime} />
-          </span>
-          <span className={style.titleName}>~/projects.dir</span>
+          <span className={style.titleName}>C:\&gt;DIR PROJECTS</span>
           <span className={style.caret} aria-hidden="true">
             _
           </span>

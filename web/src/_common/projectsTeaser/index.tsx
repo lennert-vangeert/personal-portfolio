@@ -13,12 +13,7 @@ const ProjectsTeaser = () => {
     <Reveal>
       <div className={style.teaser}>
         <div className={style.bar}>
-          <span className={style.dots} aria-hidden="true">
-            <span className={style.dotMagenta} />
-            <span className={style.dotYellow} />
-            <span className={style.dotLime} />
-          </span>
-          <span className={style.name}>~/projects.dir</span>
+          <span className={style.name}>C:\&gt;DIR PROJECTS</span>
         </div>
         <div className={style.body}>
           <p className={style.cmd}>

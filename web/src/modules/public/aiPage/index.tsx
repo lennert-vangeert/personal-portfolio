@@ -203,12 +203,7 @@ const AIPage = () => {
           {/* ---- title bar ---- */}
           <header className={style.titlebar}>
             <div className={style.titleLeft}>
-              <span className={style.windowDots} aria-hidden="true">
-                <span className={style.dotMagenta} />
-                <span className={style.dotYellow} />
-                <span className={style.dotLime} />
-              </span>
-              <span className={style.titleName}>LENNERT.AI</span>
+              <span className={style.titleName}>C:\&gt;LENNERT.AI</span>
             </div>
             <div className={style.titleRight}>
               <span className={style.status} data-state={chatReady}>
